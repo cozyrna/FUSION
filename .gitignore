@@ -1,0 +1,21 @@
+# R and RStudio
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# Package build artifacts
+.Rcheck/
+.Rbuildignore
+*.tar.gz
+
+# R Markdown
+*.utf8.md
+*.knit.md
+*_cache/
+*.Rmd~
+
+# OS files
+.DS_Store
+Thumbs.db
+
