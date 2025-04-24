@@ -2,11 +2,12 @@
 
 ## Install instructions:
 
-### Directly from github
+#### Directly from github
 
 remotes::install_github("cozyrna/FUSION")
 
-### Using source code
+#### Using source code
+
 1. Download FUSION_*.tar.gz file
 2. Open Rstudio or R and type as below:
 
@@ -14,15 +15,15 @@ install.packages("~/FUSION_*.tar.gz", repos = NULL, type = "source")
 
 library(FUSION)
 
-### There are three functions in this package : 
+#### There are three functions in this package : 
 
-## FUSION_ps - Enrichment Analysis of sncRNA families in paired data samples using expression matrix
+#### FUSION_ps - Enrichment Analysis of sncRNA families in paired data samples using expression matrix
 
-## FUSION_ms - Enrichment Analysis of sncRNA families in multiple samples data using expression matrix
+#### FUSION_ms - Enrichment Analysis of sncRNA families in multiple samples data using expression matrix
 
-## FUSION_msmc - Enrichment Analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix
+#### FUSION_msmc - Enrichment Analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix
  
-### Ask help for the description and help menus of each of these functions :
+#### Ask help for the description and help menus of each of these functions :
 
 ?FUSION_ps
 
