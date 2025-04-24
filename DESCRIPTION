@@ -3,20 +3,22 @@ Type: Package
 Title: FUSION - Family-level Unique Small ncRNA IntegratION
 Version: 0.1.0
 Authors@R: c(
-    person("Hukam", "Rawal", role = c("aut", "cre"), email = "hukam.rawal@gmail.com", comment = c(ORCID = "0000-0002-2727-9721")),
-    person("Tong", "Zhou", email = "tongz@med.unr.edu", role = c("aut")))
-Maintainer: Hukam Rawal <hrawal@unr.edu>, Tong Zhou <tongz@med.unr.edu>
+    person("Hukam", "Rawal", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2727-9721")),
+    person("Qi", "Chen", role = c("aut", "cre")),
+    person("Tong", "Zhou", email = "tongz@med.unr.edu", role = c("aut", "cre")))
+Maintainer: Tong Zhou <tongz@med.unr.edu>
 usethis: :use_package("stats", "utils", "usethis") 
 Imports:
     stats,
     utils,
     usethis
-Description: FUSION has two funcion modules FUSION_ps and FUSION_ms for enrichment analysis of sncRNA families in paired data samples (FUSION_ps) and multiple sample data (FUSION_ms) using expression matrix as input.
-    FUSION_ps performs enrichment analysis of sncRNA families in paired data samples.
-    FUSION_ms performs enrichment analysis of sncRNA families in multiple samples data.
+Description: FUSION has two modules FUSION_ps and FUSION_ms for diferential expression analysis of sncRNA families in paired data samples (FUSION_ps) and multiple sample data (FUSION_ms) using expression matrix as input.
+    FUSION_ps performs differential expression analysis of sncRNA families in paired data samples.
+    FUSION_ms performs differential expression analysis of sncRNA families in multiple samples data.
+    Further,to perform differntial expression analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix, one can use the function FUSION_msmc. 
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 NeedsCompilation: no
 Packaged: 2024-09-24 20:09:15 UTC; tahoe
-Author: Hukam Rawal [aut, cre] (<https://orcid.org/0000-0002-2727-9721>), Tong Zhou [aut]
+Author: Hukam Rawal [aut, cre] (<https://orcid.org/0000-0002-2727-9721>), Qi Chen [aut, cre], Tong Zhou [aut, cre]

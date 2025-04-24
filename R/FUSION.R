@@ -4,11 +4,14 @@
 ##' @rdname FUSION
 ##' @title FUSION  - Family-level Unique Small RNA Integration across samples using expression matrix
 ##' @details
+##' For more information, see the user manual:
+##' \code{browseURL(system.file("docs/FUSION_1.0_User_Manual.pdf", package = "FUSION"))}
+##' 
 ##' After installing the package FUSION, call the library as: library(FUSION).
 ##' \cr
 ##' \cr There are three main functions in this package : FUSION_ps, FSION_ms, and FUSION_msmc
 ##' \cr
-##' \cr Ask help for the description and help menus of each of these two functions :
+##' \cr Ask help for the description and help menus of each of these functions :
 ##' \cr ?FUSION_ps
 ##' \cr ?FUSION_ms
 ##' \cr ?FUSION_msmc

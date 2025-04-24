@@ -1,3 +1,6 @@
+
+[User Manual](inst/docs/FUSION_1.0_User_Manual.pdf)
+
 # FUSION (Family-level Unique Small RNA Integration) Version 1.0.0
 
 ## Install instructions:
@@ -17,11 +20,11 @@ library(FUSION)
 
 #### There are three functions in this package : 
 
-#### FUSION_ps - Enrichment Analysis of sncRNA families in paired data samples using expression matrix
+#### FUSION_ps - Diferential expression analysis of sncRNA families in paired data samples using expression matrix
 
-#### FUSION_ms - Enrichment Analysis of sncRNA families in multiple samples data using expression matrix
+#### FUSION_ms - Diferential expression analysis of sncRNA families in multiple samples data using expression matrix
 
-#### FUSION_msmc - Enrichment Analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix
+#### FUSION_msmc - Diferential expression analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix
  
 #### Ask help for the description and help menus of each of these functions :
 
@@ -33,7 +36,6 @@ library(FUSION)
 
 #### Note: If want to run examples straight in the Help documentation, it is necessary to first set working directory to the base folder of the installed package FUSION. Such as : setwd("/home/..../R/.../FUSION/"), or simply provide the exact path of the appropriate example matrix files.
 
-setwd("~/R/x86_64-pc-linux-gnu-library/4.3/FUSION")
 
 ### Here are the sample runs with example data sets:
 
