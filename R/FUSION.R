@@ -29,7 +29,7 @@
 
 NULL
 
-#' FUSION_ps - Enrichment Analysis of sncRNA families in paired data samples using expression matrix
+#' FUSION_ps - Differential expression analysis of sncRNA families in paired data samples using expression matrix
 #'
 #' @param a a matrix with first and second column as "Sequence" (or ID) and "Annotation", respectively. Sequence (or ID) must be unique.  Rest of the columns provides RPM or expression values from different samples under study, such as first half of those belongs to the samples from Condition1 (such as control or from healthy tissue) and second half belongs to the samples from Condition2 (such as treated or infected tissue)
 #' @param order use either G or P for specifying the order of paired samples in the input matrix, where G is for Samples in Group (i.e. all samples from Condition1 followed by all samples from Condition2) (follow example_matrix_p1)) and P is for samples in Pairs (follow example_matrix_p4). By default it considers sample pairs in Group (G)")
@@ -41,17 +41,17 @@ NULL
 #' @examples
 #' \donttest{
 #' # Note:  To run and check the examples, please first set the working directory to the base folder of installed FUSION package. such as : setwd("/home/..../R/.../FUSION/").
-#' FUSION_ps(a = "./extdata/example_matrix_p1.txt") ## Run enrichment analysis for example_matrix_p1.txt (5 pairs of samples) at default row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-#' FUSION_ps(a = "./extdata/example_matrix_p1.txt", padj_method = "BH") ## Run enrichment analysis for example_matrix_p1.txt (5 pairs of samples) at default row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) using BH (Benjamini & Hochberg) method for correcting or adjusting p-values;
-#' FUSION_ps(a = "./extdata/example_matrix_p1.txt", row_mean = 0.5) ## Run enrichment analysis for example_matrix_p1.txt (5 pairs of samples) at row_mean threshold of 0.5 for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-#' FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = "a")    ## Run enrichment analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for all sncRNA families;
-#' FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = 0)    ## Run enrichment analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for all sncRNA families;
-#' FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = "mirna")  ## Run enrichment analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for miRNA families;
-#' FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = "rsrna")  ## Run enrichment analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for rsRNA families;
-#' FUSION_ps(a = "./extdata/example_matrix_p3.txt", row_mean = 0.5, sncrna_family = "tsrna")   ## Run enrichment analysis for example_matrix_p2.txt (4 pairs of samples) at row_mean threshold of 0.5 for tsRNA families;
-#' FUSION_ps(a = "./extdata/example_matrix_p3.txt", row_mean = 0.1, sncrna_family = "ysrna")  ## Run enrichment analysis for example_matrix_p2.txt (4 pairs of samples) at row_mean threshold of 0.1 for for ysRNA families;
-#' FUSION_ps(a = "./extdata/example_matrix_p3.txt", sncrna_family = "other")  ## Run enrichment analysis for example_matrix_p2.txt (4 pairs of samples) at default row_mean threshold (i.e., 0.1) for other (pRNA,snRNA and snoRNA) sncRNA families;
-#' FUSION_ps(a = "./extdata/example_matrix_p4.txt",order = "P") ## Run enrichment analysis for example_matrix_p4.txt (5 pairs of samples) at default row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) and samples are arranged in as pairs of columns;
+#' FUSION_ps(a = "./extdata/example_matrix_p1.txt") ## Run differential expression analysis for example_matrix_p1.txt (5 pairs of samples) at default row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+#' FUSION_ps(a = "./extdata/example_matrix_p1.txt", padj_method = "BH") ## Run differential expression analysis for example_matrix_p1.txt (5 pairs of samples) at default row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) using BH (Benjamini & Hochberg) method for correcting or adjusting p-values;
+#' FUSION_ps(a = "./extdata/example_matrix_p1.txt", row_mean = 0.5) ## Run differential expression analysis for example_matrix_p1.txt (5 pairs of samples) at row_mean threshold of 0.5 for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+#' FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = "a")    ## Run differential expression analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for all sncRNA families;
+#' FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = 0)    ## Run differential expression analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for all sncRNA families;
+#' FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = "mirna")  ## Run differential expression analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for miRNA families;
+#' FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = "rsrna")  ## Run differential expression analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for rsRNA families;
+#' FUSION_ps(a = "./extdata/example_matrix_p3.txt", row_mean = 0.5, sncrna_family = "tsrna")   ## Run differential expression analysis for example_matrix_p2.txt (4 pairs of samples) at row_mean threshold of 0.5 for tsRNA families;
+#' FUSION_ps(a = "./extdata/example_matrix_p3.txt", row_mean = 0.1, sncrna_family = "ysrna")  ## Run differential expression analysis for example_matrix_p2.txt (4 pairs of samples) at row_mean threshold of 0.1 for for ysRNA families;
+#' FUSION_ps(a = "./extdata/example_matrix_p3.txt", sncrna_family = "other")  ## Run differential expression analysis for example_matrix_p2.txt (4 pairs of samples) at default row_mean threshold (i.e., 0.1) for other (pRNA,snRNA and snoRNA) sncRNA families;
+#' FUSION_ps(a = "./extdata/example_matrix_p4.txt",order = "P") ## Run differential expression analysis for example_matrix_p4.txt (5 pairs of samples) at default row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) and samples are arranged in as pairs of columns;
 #' # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g., options(max.print = 1e6); sink("~/output.txt"); FUSION_ps(a = "./extdata/example_matrix_p1.txt"); sink()
 #' }
 #' @export
@@ -198,7 +198,7 @@ NULL
     return(NULL)
   }
   
-  ########## Part3: calling function to perform enrichment analysis on each pair using processed inputs and return output ##########
+  ########## Part3: calling function to perform differential expression analysis on each pair using processed inputs and return output ##########
   
   ##### enlisting the sncRNA families (from Annotation column) in the matrix
   
@@ -272,7 +272,7 @@ NULL
 ########## FUSION_ps function ends ##########
 
 
-#' FUSION_ms - Enrichment Analysis of sncRNA families in multiple samples data using expression matrix
+#' FUSION_ms - Differential expression analysis of sncRNA families in multiple samples data using expression matrix
 #'
 #' @param a a matrix with first and second column as "Sequence" (or ID) and "Annotation", respectively. Rest of the columns provides RPM or expression values from different samples under study. Sequence (or ID) must be unique.
 #' @param S1 Number of samples from Condition1 (such as control or from healthy tissue)
@@ -287,16 +287,16 @@ NULL
 #' \donttest{
 #' # Note:  To run and check the examples, please first set the working directory to the base folder of installed FUSION package. such as : setwd("/home/..../R/.../FUSION/").
 #' # Note: these examples may take some time depending on the system configuration.
-#' FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16, row_mean = 1, top_species = 5000)   ## For running enrichment analysis on user-provided expression matrix (example_matrix1.txt) with 10 healthy samples (S1) and 16 patients (S2) at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-#' FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16)    ## For running enrichment analysis on user-provided expression matrix (example_matrix1.txt) with 10 samples from Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean (i.e., 0.1) and top_species threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-#' FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16, padj_method = "BH") ## For running enrichment analysis on user-provided expression matrix (example_matrix1.txt) with 10 samples from Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean (i.e., 0.1) and top_species threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) using BH (Benjamini & Hochberg) method for correcting or adjusting p-values;
-#' FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16, sncrna_family = "a")    ## For running enrichment analysis on user-provided expression matrix (example_matrix1.txt) with 10 samples from Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean threshold  (i.e., 0.1) and top_species for all sncRNA families;
-#' FUSION_ms(a = "./extdata/example_matrix2.txt", S1 = 5, S2 = 5, sncrna_family = 0)    ## For running enrichment analysis on user-provided expression matrix (example_matrix2.txt) with 5 healthy samples (S1) and 5 patients (S2) at default row_mean threshold  (i.e., 0.1) and top_species for all sncRNA families;
-#' FUSION_ms(a = "./extdata/example_matrix2.txt", S1 = 5, S2 = 5, sncrna_family = "mirna", top_species = 1000) ## For running enrichment analysis on user-provided expression matrix (example_matrix2.txt) with 5 samples from Condition1 (S1) and 5 samples from Condition2 (S2) at default row_mean threshold (i.e., 0.1) for 1000 top_species for miRNA families;
-#' FUSION_ms(a = "./extdata/example_matrix2.txt", S1 = 5, S2 = 5, row_mean = 10, top_species = 2000, sncrna_family = "rsrna")   ## For running enrichment analysis on user-provided expression matrix (example_matrix2.txt) with 5 samples from Condition1 (S1) and 5 samples from Condition2 (S2) at row_mean threshold of 10 for 2000 top_species for rsRNA families;
-#' FUSION_ms(a = "./extdata/example_matrix3.txt", S1 = 10, S2 = 8, row_mean = 10, sncrna_family = "tsrna")   ## For running enrichment analysis on user-provided expression matrix (example_matrix3.txt) with 10 control samples (S1) and 8 treated samples (S2) at row_mean threshold of 10 for default (1000) top_species for tsRNA families;
-#' FUSION_ms(a = "./extdata/example_matrix3.txt", S1 = 10, S2 = 8, row_mean = 0.1, sncrna_family = "ysrna")    ## For running enrichment analysis on user-provided expression matrix (example_matrix3.txt) with 10 samples from Condition1 (S1) and 8 samples from Condition2 (S2) at row_mean threshold of 0.1 for default (1000) top_species for ysRNA families;
-#' FUSION_ms(a = "./extdata/example_matrix3.txt", S1 = 10, S2 = 8, top_species = 100, sncrna_family = "other")   ## For running enrichment analysis on user-provided expression matrix (example_matrix3.txt) with 10 samples from Condition1 (S1) and 8 samples from Condition2 (S2) at default row_mean threshold  (i.e., 0.1) for 100 top_species for other (pRNA,snRNA and snoRNA) sncRNA families;
+#' FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16, row_mean = 1, top_species = 5000)   ## For running differential expression analysis on user-provided expression matrix (example_matrix1.txt) with 10 healthy samples (S1) and 16 patients (S2) at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+#' FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16)    ## For running differential expression analysis on user-provided expression matrix (example_matrix1.txt) with 10 samples from Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean (i.e., 0.1) and top_species threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+#' FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16, padj_method = "BH") ## For running differential expression analysis on user-provided expression matrix (example_matrix1.txt) with 10 samples from Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean (i.e., 0.1) and top_species threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) using BH (Benjamini & Hochberg) method for correcting or adjusting p-values;
+#' FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16, sncrna_family = "a")    ## For running differential expression analysis on user-provided expression matrix (example_matrix1.txt) with 10 samples from Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean threshold  (i.e., 0.1) and top_species for all sncRNA families;
+#' FUSION_ms(a = "./extdata/example_matrix2.txt", S1 = 5, S2 = 5, sncrna_family = 0)    ## For running differential expression analysis on user-provided expression matrix (example_matrix2.txt) with 5 healthy samples (S1) and 5 patients (S2) at default row_mean threshold  (i.e., 0.1) and top_species for all sncRNA families;
+#' FUSION_ms(a = "./extdata/example_matrix2.txt", S1 = 5, S2 = 5, sncrna_family = "mirna", top_species = 1000) ## For running differential expression analysis on user-provided expression matrix (example_matrix2.txt) with 5 samples from Condition1 (S1) and 5 samples from Condition2 (S2) at default row_mean threshold (i.e., 0.1) for 1000 top_species for miRNA families;
+#' FUSION_ms(a = "./extdata/example_matrix2.txt", S1 = 5, S2 = 5, row_mean = 10, top_species = 2000, sncrna_family = "rsrna")   ## For running differential expression analysis on user-provided expression matrix (example_matrix2.txt) with 5 samples from Condition1 (S1) and 5 samples from Condition2 (S2) at row_mean threshold of 10 for 2000 top_species for rsRNA families;
+#' FUSION_ms(a = "./extdata/example_matrix3.txt", S1 = 10, S2 = 8, row_mean = 10, sncrna_family = "tsrna")   ## For running differential expression analysis on user-provided expression matrix (example_matrix3.txt) with 10 control samples (S1) and 8 treated samples (S2) at row_mean threshold of 10 for default (1000) top_species for tsRNA families;
+#' FUSION_ms(a = "./extdata/example_matrix3.txt", S1 = 10, S2 = 8, row_mean = 0.1, sncrna_family = "ysrna")    ## For running differential expression analysis on user-provided expression matrix (example_matrix3.txt) with 10 samples from Condition1 (S1) and 8 samples from Condition2 (S2) at row_mean threshold of 0.1 for default (1000) top_species for ysRNA families;
+#' FUSION_ms(a = "./extdata/example_matrix3.txt", S1 = 10, S2 = 8, top_species = 100, sncrna_family = "other")   ## For running differential expression analysis on user-provided expression matrix (example_matrix3.txt) with 10 samples from Condition1 (S1) and 8 samples from Condition2 (S2) at default row_mean threshold  (i.e., 0.1) for 100 top_species for other (pRNA,snRNA and snoRNA) sncRNA families;
 #' # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g., options(max.print = 1e6); sink("~/output.txt"); FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16); sink()
 #' }
 #' @export
@@ -394,7 +394,7 @@ NULL
     return(NULL)
   }
   
-  ########## Part2: Function body starts to perform enrichment analysis from processed inputs ##########
+  ########## Part2: Function body starts to perform differential expression analysis from processed inputs ##########
   
   if (ncol(e) != length(cl))
   {
@@ -462,7 +462,7 @@ NULL
 ########## FUSION_ms function ends ##########
 
 
-#' FUSION_msmc - Enrichment Analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix
+#' FUSION_msmc - Differential expression analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix
 #'
 #' @param a a matrix with first and second column as "Sequence" (or ID) and "Annotation", respectively. Rest of the columns provides RPM or expression values from different samples under study. Sequence (or ID) must be unique.
 #' @param cl a file specifying multiple sample conditions in a comma separated format (such as for 3 different conditions with 6 samples each the file will contains the input: 1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3). Note: one can specify the condition in any order depending on the order of  the samples in the matrix, such as : “2,2,2,1,1,1,3,3,3” or “1,2,1,2,1,2,1,2,1,2” or “1,1,1,2,2,2,1,1,1,3,3,3”.
@@ -476,9 +476,9 @@ NULL
 #' \donttest{
 #' # Note:  To run and check the examples, please first set the working directory to the base folder of installed FUSION package. such as : setwd("/home/..../R/.../FUSION/").
 #' # Note: these examples may take some time depending on the system configuration.
-#' FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition1.txt", row_mean = 1, top_species = 5000)   ## For running enrichment analysis on user-provided expression matrix (example_matrix_cl.txt) with 18 samples as per the conditions specified (i.e., 3 different conditions with 6 samples each) in example_condition1.txt at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-#' FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition2.txt", row_mean = 1, top_species = 5000)   ## For running enrichment analysis on user-provided expression matrix (example_matrix_cl.txt) with 18 samples as per the conditions specified (i.e., 4 different conditions with condition 1, 2, and 3 having  five samples each, while last three samples are representing the condition 4) in example_condition2.txt at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-#' FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition3.txt", row_mean = 10, sncrna_family = "tsrna") ## For running enrichment analysis on user-provided expression matrix (example_matrix_cl.txt) with 18 samples as per the conditions specified (i.e., 2 different conditions with condition 1, and 2 having  10 and 8 samples, respectively in the example_condition3.txt at row_mean threshold of 10 for default (1000) top_species for tsRNA families. 
+#' FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition1.txt", row_mean = 1, top_species = 5000)   ## For running differential expression analysis on user-provided expression matrix (example_matrix_cl.txt) with 18 samples as per the conditions specified (i.e., 3 different conditions with 6 samples each) in example_condition1.txt at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+#' FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition2.txt", row_mean = 1, top_species = 5000)   ## For running differential expression analysis on user-provided expression matrix (example_matrix_cl.txt) with 18 samples as per the conditions specified (i.e., 4 different conditions with condition 1, 2, and 3 having  five samples each, while last three samples are representing the condition 4) in example_condition2.txt at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+#' FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition3.txt", row_mean = 10, sncrna_family = "tsrna") ## For running differential expression analysis on user-provided expression matrix (example_matrix_cl.txt) with 18 samples as per the conditions specified (i.e., 2 different conditions with condition 1, and 2 having  10 and 8 samples, respectively in the example_condition3.txt at row_mean threshold of 10 for default (1000) top_species for tsRNA families. 
 #' # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g., options(max.print = 1e6); sink("~/output.txt"); FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16); sink()
 #' }
 #' @export
@@ -575,7 +575,7 @@ NULL
     return(NULL)
   }
   
-  ########## Part2: Function body starts to perform enrichment analysis from processed inputs ##########
+  ########## Part2: Function body starts to perform differential expression analysis from processed inputs ##########
   
   if (ncol(e) != length(cl))
   {
