@@ -34,11 +34,31 @@ FUSION_msmc - Differential expression analysis of sncRNA families in multiple sa
 }
 \examples{
 \donttest{
-# Note:  To run and check the examples, please first set the working directory to the base folder of installed FUSION package. such as : setwd("/home/..../R/.../FUSION/").
-# Note: these examples may take some time depending on the system configuration.
-FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition1.txt", row_mean = 1, top_species = 5000)   ## For running differential expression analysis on user-provided expression matrix (example_matrix_cl.txt) with 18 samples as per the conditions specified (i.e., 3 different conditions with 6 samples each) in example_condition1.txt at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition2.txt", row_mean = 1, top_species = 5000)   ## For running differential expression analysis on user-provided expression matrix (example_matrix_cl.txt) with 18 samples as per the conditions specified (i.e., 4 different conditions with condition 1, 2, and 3 having  five samples each, while last three samples are representing the condition 4) in example_condition2.txt at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition3.txt", row_mean = 10, sncrna_family = "tsrna") ## For running differential expression analysis on user-provided expression matrix (example_matrix_cl.txt) with 18 samples as per the conditions specified (i.e., 2 different conditions with condition 1, and 2 having  10 and 8 samples, respectively in the example_condition3.txt at row_mean threshold of 10 for default (1000) top_species for tsRNA families. 
-# Note:  If you want to save the terminal/console output to a file, use sink() command. e.g., options(max.print = 1e6); sink("~/output.txt"); FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16); sink()
+# Note:  After installation, one can find the example files in "../FUSION/extdata/"
+# To run on your own matrix file, provide the full path as : 
+# FUSION(a = "/path/to/your_matrix.txt", cl = "/path/to/your_condition.txt")
+example_matrix_cl <- system.file("extdata", "example_matrix_cl.txt", package = "FUSION")
+example_condition1 <- system.file("extdata", "example_condition1.txt", package = "FUSION")
+example_condition2 <- system.file("extdata", "example_condition2.txt", package = "FUSION")
+example_condition3 <- system.file("extdata", "example_condition3.txt", package = "FUSION")
+FUSION_msmc(a = example_matrix_cl, cl = example_condition1, row_mean = 1, top_species = 5000)   
+# For running differential expression analysis on example_matrix_cl.txt with 18 samples as per
+# the conditions specified (i.e., 3 different conditions with 6 samples each) in the file 
+# example_condition1.txt at row_mean threshold of 1 for 5000 top_species for 
+# sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+FUSION_msmc(a = example_matrix_cl, cl = example_condition2, row_mean = 1, top_species = 5000)   
+# For running differential expression analysis on example_matrix_cl.txt with 18 samples as per
+# the conditions specified (i.e., 4 different conditions with condition 1, 2, and 3 having five
+# samples each, while last three samples are representing the condition 4) in the file 
+# example_condition2.txt at row_mean threshold of 1 for 5000 top_species for 
+# sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+FUSION_msmc(a = example_matrix_cl, cl = example_condition3, row_mean = 10, sncrna_family = "tsrna") 
+# For running differential expression analysis on example_matrix_cl.txt with 18 samples as per
+# the conditions specified (i.e., 2 different conditions with condition 1, and 2 having  10 and 
+# 8 samples, respectively) in the file example_condition3.txt at row_mean threshold of 10 for 
+# default (1000) top_species for tsRNA families. 
+# Note:  If you want to save the terminal/console output to a file, use sink() command. 
+# e.g.,:  options(max.print = 1e6); sink("~/output.txt"); 
+# FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16); sink()
 }
 }

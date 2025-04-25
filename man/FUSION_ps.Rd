@@ -31,18 +31,51 @@ FUSION_ps - Differential expression analysis of sncRNA families in paired data s
 }
 \examples{
 \donttest{
-# Note:  To run and check the examples, please first set the working directory to the base folder of installed FUSION package. such as : setwd("/home/..../R/.../FUSION/").
-FUSION_ps(a = "./extdata/example_matrix_p1.txt") ## Run differential expression analysis for example_matrix_p1.txt (5 pairs of samples) at default row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-FUSION_ps(a = "./extdata/example_matrix_p1.txt", padj_method = "BH") ## Run differential expression analysis for example_matrix_p1.txt (5 pairs of samples) at default row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) using BH (Benjamini & Hochberg) method for correcting or adjusting p-values;
-FUSION_ps(a = "./extdata/example_matrix_p1.txt", row_mean = 0.5) ## Run differential expression analysis for example_matrix_p1.txt (5 pairs of samples) at row_mean threshold of 0.5 for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = "a")    ## Run differential expression analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for all sncRNA families;
-FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = 0)    ## Run differential expression analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for all sncRNA families;
-FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = "mirna")  ## Run differential expression analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for miRNA families;
-FUSION_ps(a = "./extdata/example_matrix_p2.txt", sncrna_family = "rsrna")  ## Run differential expression analysis for example_matrix_p2.txt (10 pairs of samples) at default row_mean threshold (i.e., 0.1) for rsRNA families;
-FUSION_ps(a = "./extdata/example_matrix_p3.txt", row_mean = 0.5, sncrna_family = "tsrna")   ## Run differential expression analysis for example_matrix_p2.txt (4 pairs of samples) at row_mean threshold of 0.5 for tsRNA families;
-FUSION_ps(a = "./extdata/example_matrix_p3.txt", row_mean = 0.1, sncrna_family = "ysrna")  ## Run differential expression analysis for example_matrix_p2.txt (4 pairs of samples) at row_mean threshold of 0.1 for for ysRNA families;
-FUSION_ps(a = "./extdata/example_matrix_p3.txt", sncrna_family = "other")  ## Run differential expression analysis for example_matrix_p2.txt (4 pairs of samples) at default row_mean threshold (i.e., 0.1) for other (pRNA,snRNA and snoRNA) sncRNA families;
-FUSION_ps(a = "./extdata/example_matrix_p4.txt",order = "P") ## Run differential expression analysis for example_matrix_p4.txt (5 pairs of samples) at default row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) and samples are arranged in as pairs of columns;
-# Note:  If you want to save the terminal/console output to a file, use sink() command. e.g., options(max.print = 1e6); sink("~/output.txt"); FUSION_ps(a = "./extdata/example_matrix_p1.txt"); sink()
+# Note:  After installation, one can find the example files in "../FUSION/extdata/"
+# To run on your own matrix file, provide the full path as : FUSION(a = "/path/to/your_matrix.txt")
+example_matrix_p1 <- system.file("extdata", "example_matrix_p1.txt", package = "FUSION")
+example_matrix_p2 <- system.file("extdata", "example_matrix_p2.txt", package = "FUSION")
+example_matrix_p3 <- system.file("extdata", "example_matrix_p3.txt", package = "FUSION")
+example_matrix_p4 <- system.file("extdata", "example_matrix_p4.txt", package = "FUSION")
+# Run differential expression analysis on example_matrix_p1.txt (5 pairs of samples) at default
+# row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+FUSION_ps(a = example_matrix_p1) 
+# Run differential expression analysis on example_matrix_p1.txt (5 pairs of samples) at default
+# row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+FUSION_ps(a = example_matrix_p1) 
+# Run differential expression analysis on example_matrix_p1.txt (5 pairs of samples) at default
+# row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) using
+# BH (Benjamini & Hochberg) method for correcting or adjusting p-values;
+FUSION_ps(a = example_matrix_p1, padj_method = "BH") 
+# Run differential expression analysis on example_matrix_p1.txt (5 pairs of samples) at row_mean
+# threshold of 0.5 for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+FUSION_ps(a = example_matrix_p1, row_mean = 0.5) 
+# Run differential expression analysis on example_matrix_p2.txt (10 pairs of samples) at default
+# row_mean threshold (i.e., 0.1) for all sncRNA families;
+FUSION_ps(a = example_matrix_p2, sncrna_family = "a")
+# Run differential expression analysis on example_matrix_p2.txt (10 pairs of samples) at default
+# row_mean threshold (i.e., 0.1) for all sncRNA families;
+FUSION_ps(a = example_matrix_p2, sncrna_family = 0)
+# Run differential expression analysis on example_matrix_p2.txt (10 pairs of samples) at default
+# row_mean threshold (i.e., 0.1) for miRNA families;
+FUSION_ps(a = example_matrix_p2, sncrna_family = "mirna")
+# Run differential expression analysis on example_matrix_p2.txt (10 pairs of samples) at default
+# row_mean threshold (i.e., 0.1) for rsRNA families;
+FUSION_ps(a = example_matrix_p2, sncrna_family = "rsrna") 
+# Run differential expression analysis on example_matrix_p2.txt (4 pairs of samples) at row_mean
+# threshold of 0.5 for tsRNA families;
+FUSION_ps(a = example_matrix_p3, row_mean = 0.5, sncrna_family = "tsrna")  
+# Run differential expression analysis on example_matrix_p2.txt (4 pairs of samples) at row_mean
+# threshold of 0.1 for for ysRNA families;
+FUSION_ps(a = example_matrix_p3, row_mean = 0.1, sncrna_family = "ysrna")  
+# Run differential expression analysis on example_matrix_p2.txt (4 pairs of samples) at default
+# row_mean threshold (i.e., 0.1) for other (pRNA,snRNA and snoRNA) sncRNA families;
+FUSION_ps(a = example_matrix_p3, sncrna_family = "other")  
+# Run differential expression analysis on example_matrix_p4.txt (5 pairs of samples) at default
+# row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) and 
+# samples are arranged in as pairs of columns;
+FUSION_ps(a = example_matrix_p4,order = "P") 
+# Note:  If you want to save the terminal/console output to a file, use sink() command. e.g.:
+# options(max.print = 1e6); sink("~/output.txt"); FUSION_ps(a = "example_matrix_p1.txt"); sink()
 }
 }
