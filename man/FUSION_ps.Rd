@@ -30,7 +30,6 @@ For each pair in the input matrix, it will return an output data-frame with w_po
 FUSION_ps - Differential expression analysis of sncRNA families in paired data samples using expression matrix
 }
 \examples{
-\donttest{
 # Note:  After installation, one can find the example files in "../FUSION/extdata/"
 # To run on your own matrix file, provide the full path as : FUSION(a = "/path/to/your_matrix.txt")
 example_matrix_p1 <- system.file("extdata", "example_matrix_p1.txt", package = "FUSION")
@@ -77,5 +76,4 @@ FUSION_ps(a = example_matrix_p3, sncrna_family = "other")
 FUSION_ps(a = example_matrix_p4,order = "P") 
 # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g.:
 # options(max.print = 1e6); sink("~/output.txt"); FUSION_ps(a = "example_matrix_p1.txt"); sink()
-}
 }

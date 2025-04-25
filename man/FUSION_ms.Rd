@@ -36,7 +36,6 @@ It will return a final output in a data-frame with t-statistics, P_value, and ad
 FUSION_ms - Differential expression analysis of sncRNA families in multiple samples data using expression matrix
 }
 \examples{
-\donttest{
 # Note:  After installation, one can find the example files in "../FUSION/extdata/"
 # To run on your own matrix file, provide the full path as : FUSION(a = "/path/to/your_matrix.txt")
 example_matrix1 <- system.file("extdata", "example_matrix1.txt", package = "FUSION")
@@ -87,5 +86,4 @@ FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, top_species = 100, sncrna_family
 # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g.:  
 # options(max.print = 1e6); sink("~/output.txt"); 
 # FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16); sink()
-}
 }

@@ -42,7 +42,6 @@ NULL
 #' @return For each pair in the input matrix, it will return an output data-frame with w_positive, w_negative, P_value, and adjusted P_value for each sncRNA family chosen for analysis.
 #'
 #' @examples
-#' \donttest{
 #' # Note:  After installation, one can find the example files in "../FUSION/extdata/"
 #' # To run on your own matrix file, provide the full path as : FUSION(a = "/path/to/your_matrix.txt")
 #' example_matrix_p1 <- system.file("extdata", "example_matrix_p1.txt", package = "FUSION")
@@ -89,7 +88,6 @@ NULL
 #' FUSION_ps(a = example_matrix_p4,order = "P") 
 #' # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g.:
 #' # options(max.print = 1e6); sink("~/output.txt"); FUSION_ps(a = "example_matrix_p1.txt"); sink()
-#' }
 #' @export
 
   FUSION_ps <- function(a, row_mean = getOption("row_mean", "0.1"), sncrna_family = c("tsrna", "rsrna", "ysrna", "mirna", "other"), padj_method = c("bonferroni", "BH"), order = c("G", "P")) {
@@ -328,7 +326,6 @@ NULL
 #' @return It will return a final output in a data-frame with t-statistics, P_value, and adjusted P_value for each sncRNA family chosen for analysis
 #'
 #' @examples
-#' \donttest{
 #' # Note:  After installation, one can find the example files in "../FUSION/extdata/"
 #' # To run on your own matrix file, provide the full path as : FUSION(a = "/path/to/your_matrix.txt")
 #' example_matrix1 <- system.file("extdata", "example_matrix1.txt", package = "FUSION")
@@ -379,7 +376,6 @@ NULL
 #' # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g.:  
 #' # options(max.print = 1e6); sink("~/output.txt"); 
 #' # FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16); sink()
-#' }
 #' @export
 
   FUSION_ms <- function(a, S1, S2, row_mean = getOption("row_mean", "0.1"), sncrna_family = c("tsrna", "rsrna", "ysrna", "mirna", "other"), top_species = getOption("max_num", "1000"), padj_method = c("bonferroni", "BH")){
@@ -561,7 +557,6 @@ NULL
 #' @return It will return a final output in a data-frame with t-statistics, P_value, and adjusted P_value for each sncRNA family chosen for analysis
 #'
 #' @examples
-#' \donttest{
 #' # Note:  After installation, one can find the example files in "../FUSION/extdata/"
 #' # To run on your own matrix file, provide the full path as : 
 #' # FUSION(a = "/path/to/your_matrix.txt", cl = "/path/to/your_condition.txt")
@@ -588,7 +583,6 @@ NULL
 #' # Note:  If you want to save the terminal/console output to a file, use sink() command. 
 #' # e.g.,:  options(max.print = 1e6); sink("~/output.txt"); 
 #' # FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16); sink()
-#' }
 #' @export
 
   FUSION_msmc <- function(a, cl, row_mean = getOption("row_mean", "0.1"), sncrna_family = c("tsrna", "rsrna", "ysrna", "mirna", "other"), top_species = getOption("max_num", "1000"), padj_method = c("bonferroni", "BH")){
