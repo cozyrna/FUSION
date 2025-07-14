@@ -1,7 +1,7 @@
 
 [User Manual](inst/docs/FUSION_1.0_User_Manual.pdf)
 
-# FUSION (Family-level Unique Small RNA Integration) Version 1.0.0
+# FUSION (Family-level Unique Small RNA Integration) Version 1.0.1
 
 ## Install instructions:
 
