@@ -11,7 +11,8 @@ FUSION_ms(
   row_mean = getOption("row_mean", "0.1"),
   sncrna_family = c("tsrna", "rsrna", "ysrna", "mirna", "other"),
   top_species = getOption("max_num", "1000"),
-  padj_method = c("bonferroni", "BH")
+  padj_method = c("bonferroni", "BH"),
+  unique_anno = FALSE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ FUSION_ms(
 \item{top_species}{number (default 1000) of top species for each sncRNA family to be considered for analysis. It can help to reduce the run time of the analysis for the families (such as rsrna families) with large number of species. If time is not a concern, use high values such as 5000, 10000, etc.}
 
 \item{padj_method}{adjustment methods for correcting p-values. Use either "bonferroni" or "BH", where BH stands for Benjamini & Hochberg. By default (i.e. if no option specified) it will run for "bonferroni".}
+
+\item{unique_anno}{filter the input matrix to consider only uniquely mapped reads (sncRNA species), meaning only the sncRNA species that map to a single parent RNA. By default, it is FALSE (i.e., all relevant sncRNA species in the matrix are considered, irrespective of whether they map to a single or multiple parent RNAs).}
 }
 \value{
 It will return a final output in a data-frame with t-statistics, P_value, and adjusted P_value for each sncRNA family chosen for analysis
@@ -41,48 +44,49 @@ FUSION_ms - Differential expression analysis of sncRNA families in multiple samp
 example_matrix1 <- system.file("extdata", "example_matrix1.txt", package = "FUSION")
 example_matrix2 <- system.file("extdata", "example_matrix2.txt", package = "FUSION")
 example_matrix3 <- system.file("extdata", "example_matrix3.txt", package = "FUSION")
-FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, row_mean = 1, top_species = 5000)   
-# For running differential expression analysis on example_matrix1.txt with 10 healthy samples (S1) 
+# Run differential expression analysis on example_matrix1.txt with 10 healthy samples (S1) 
 # and 16 patients (S2) at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs,
 # rsRNAs and ysRNAs) (default);
-FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16)    
-# For running differential expression analysis on example_matrix1.txt with 10 samples from 
+FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, row_mean = 1, top_species = 5000)
+# Run differential expression analysis on example_matrix1.txt with 10 samples from 
 # Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean (i.e., 0.1) and 
-# top_species threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, padj_method = "BH") 
-# For running differential expression analysis on example_matrix1.txt with 10 samples from
+# top_species (i.e., 1000) threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16)    
+# Run differential expression analysis on example_matrix1.txt with 10 samples from
 # Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean (i.e., 0.1) and
-# top_species threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default)
+# top_species (i.e., 1000) threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default)
 # using BH (Benjamini & Hochberg) method for correcting or adjusting p-values;
-FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, sncrna_family = "a")    
-# For running differential expression analysis on example_matrix1.txt with 10 samples from
+FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, padj_method = "BH") 
+# Run differential expression analysis on example_matrix1.txt with 10 samples from
 # Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean threshold (i.e., 0.1)
-# and top_species for all sncRNA families;
-FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, sncrna_family = 0)    
-# For running differential expression analysis on example_matrix2.txt with 5 healthy 
+# and top_species (i.e., 1000) for all sncRNA families;
+FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, sncrna_family = "a")    
+# Run differential expression analysis on example_matrix2.txt with 5 healthy 
 # samples (S1) and 5 patients (S2) at default row_mean threshold  (i.e., 0.1) and 
-# top_species for all sncRNA families;
-FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, sncrna_family = "mirna", top_species = 1000) 
-# For running differential expression analysis on example_matrix2.txt with 5 samples from 
+# top_species (i.e., 1000) for all sncRNA families;
+FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, sncrna_family = 0)    
+# Run differential expression analysis on example_matrix2.txt with 5 samples from 
 # Condition1 (S1) and 5 samples from Condition2 (S2) at default row_mean threshold (i.e., 0.1) 
 # for 1000 top_species for miRNA families;
-FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, row_mean = 10, top_species = 2000, 
-sncrna_family = "rsrna")   
-# For running differential expression analysis on example_matrix2.txt with 5 samples from 
+FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, sncrna_family = "mirna", top_species = 1000) 
+# Run differential expression analysis on example_matrix2.txt with 5 samples from 
 # Condition1 (S1) and 5 samples from Condition2 (S2) at row_mean threshold of 10 for 
 # 2000 top_species for rsRNA families;
-FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, row_mean = 10, sncrna_family = "tsrna")   
-# For running differential expression analysis on example_matrix3.txt with 10 control 
-# samples (S1) and 8 treated samples (S2) at row_mean threshold of 10 for default (1000) 
+FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, row_mean = 10, top_species = 2000, 
+sncrna_family = "rsrna")   
+# Run differential expression analysis on example_matrix3.txt with 10 control 
+# samples (S1) and 8 treated samples (S2) at row_mean threshold of 10 for default (i.e., 1000) 
 # top_species for tsRNA families;
-FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, row_mean = 0.1, sncrna_family = "ysrna")    
-# For running differential expression analysis on example_matrix3.txt with 10 samples from 
+FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, row_mean = 10, sncrna_family = "tsrna")   
+# Run differential expression analysis on example_matrix3.txt with 10 samples from 
 # Condition1 (S1) and 8 samples from Condition2 (S2) at row_mean threshold of 0.1 for 
-# default (1000) top_species for ysRNA families;
-FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, top_species = 100, sncrna_family = "other")   
-# For running differential expression analysis on example_matrix3.txt with 10 samples from 
-# Condition1 (S1) and 8 samples from Condition2 (S2) at default row_mean threshold  (i.e., 0.1)
+# default (i.e., 1000) top_species for ysRNA families;
+FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, row_mean = 0.1, sncrna_family = "ysrna")    
+# Run differential expression analysis on example_matrix3.txt with 10 samples from 
+# Condition1 (S1) and 8 samples from Condition2 (S2) considering only uniquely mapped reads
+# (sncRNA species that map to a single parent RNA) at default row_mean threshold  (i.e., 0.1)
 # for 100 top_species for other (pRNA,snRNA and snoRNA) sncRNA families;
+FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, top_species = 100, sncrna_family = "other",  unique_anno = TRUE)   
 # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g.:  
 # options(max.print = 1e6); sink("~/output.txt"); 
 # FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16); sink()

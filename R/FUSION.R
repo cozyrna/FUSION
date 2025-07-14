@@ -5,7 +5,7 @@
 ##' @title FUSION  - Family-level Unique Small RNA Integration across samples using expression matrix
 ##' @details
 ##' For more information, see the user manual:
-##' \code{browseURL(system.file("docs/FUSION_1.0_User_Manual.pdf", package = "FUSION"))}
+##' \code{browseURL(system.file("docs/FUSION_1.0.1_User_Manual.pdf", package = "FUSION"))}
 ##' 
 ##' After installing the package FUSION, call the library as: library(FUSION).
 ##' \cr
@@ -38,7 +38,8 @@ NULL
 #' @param order use either G or P for specifying the order of paired samples in the input matrix, where G is for Samples in Group (i.e. all samples from Condition1 followed by all samples from Condition2) (follow example_matrix_p1)) and P is for samples in Pairs (follow example_matrix_p4). By default it considers sample pairs in Group (G)")
 #' @param row_mean  mean RPM (default 0.1) threshold to retain the sncRNA species (rows) in the matrix
 #' @param sncrna_family list of sncRNA families to be analysis for expression analysis study. Use "tsrna", "rsrna", "ysrna", or "mirna" for tsRNAs, rsRNAs, ysRNAs, or mirna, respectively. Use "other" for 'pRNA,snRNA and snoRNA'. For all, use any letter or number, eg. "a","b", "c", 1, 2, 3. By default (i.e. if no option specified) it will search for tryRNAs (tsRNAs, rsRNAs, and ysRNAs)
-#' @param padj_method adjustment methods for correcting p-values. Use either "bonferroni" or "BH", where BH stands for Benjamini & Hochberg. By default (i.e. if no option specified) it will run for "bonferroni". 
+#' @param padj_method adjustment methods for correcting p-values. Use either "bonferroni" or "BH", where BH stands for Benjamini & Hochberg. By default (i.e., if no option specified) it will run for "bonferroni". 
+#' @param unique_anno filter the input matrix to consider only uniquely mapped reads (sncRNA species), meaning only the sncRNA species that map to a single parent RNA. By default, it is FALSE (i.e., all relevant sncRNA species in the matrix are considered, irrespective of whether they map to a single or multiple parent RNAs).
 #' @return For each pair in the input matrix, it will return an output data-frame with w_positive, w_negative, P_value, and adjusted P_value for each sncRNA family chosen for analysis.
 #'
 #' @examples
@@ -48,9 +49,6 @@ NULL
 #' example_matrix_p2 <- system.file("extdata", "example_matrix_p2.txt", package = "FUSION")
 #' example_matrix_p3 <- system.file("extdata", "example_matrix_p3.txt", package = "FUSION")
 #' example_matrix_p4 <- system.file("extdata", "example_matrix_p4.txt", package = "FUSION")
-#' # Run differential expression analysis on example_matrix_p1.txt (5 pairs of samples) at default
-#' # row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-#' FUSION_ps(a = example_matrix_p1) 
 #' # Run differential expression analysis on example_matrix_p1.txt (5 pairs of samples) at default
 #' # row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
 #' FUSION_ps(a = example_matrix_p1) 
@@ -70,9 +68,6 @@ NULL
 #' # Run differential expression analysis on example_matrix_p2.txt (10 pairs of samples) at default
 #' # row_mean threshold (i.e., 0.1) for miRNA families;
 #' FUSION_ps(a = example_matrix_p2, sncrna_family = "mirna")
-#' # Run differential expression analysis on example_matrix_p2.txt (10 pairs of samples) at default
-#' # row_mean threshold (i.e., 0.1) for rsRNA families;
-#' FUSION_ps(a = example_matrix_p2, sncrna_family = "rsrna") 
 #' # Run differential expression analysis on example_matrix_p2.txt (4 pairs of samples) at row_mean
 #' # threshold of 0.5 for tsRNA families;
 #' FUSION_ps(a = example_matrix_p3, row_mean = 0.5, sncrna_family = "tsrna")  
@@ -82,23 +77,27 @@ NULL
 #' # Run differential expression analysis on example_matrix_p2.txt (4 pairs of samples) at default
 #' # row_mean threshold (i.e., 0.1) for other (pRNA,snRNA and snoRNA) sncRNA families;
 #' FUSION_ps(a = example_matrix_p3, sncrna_family = "other")  
-#' # Run differential expression analysis on example_matrix_p4.txt (5 pairs of samples) at default
+#' # Run differential expression analysis on example_matrix_p4.txt (5 pairs of samples) considering
+#' # only uniquely mapped reads (sncRNA species that map to a single parent RNA) at default
 #' # row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) and 
 #' # samples are arranged in as pairs of columns;
-#' FUSION_ps(a = example_matrix_p4,order = "P") 
+#' FUSION_ps(a = example_matrix_p4,order = "P", unique_anno = TRUE) 
 #' # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g.:
 #' # options(max.print = 1e6); sink("~/output.txt"); FUSION_ps(a = "example_matrix_p1.txt"); sink()
 #' @export
 
-  FUSION_ps <- function(a, row_mean = getOption("row_mean", "0.1"), sncrna_family = c("tsrna", "rsrna", "ysrna", "mirna", "other"), padj_method = c("bonferroni", "BH"), order = c("G", "P")) {
+FUSION_ps <- function(a, row_mean = getOption("row_mean", "0.1"), sncrna_family = c("tsrna", "rsrna", "ysrna", "mirna", "other"), padj_method = c("bonferroni", "BH"), order = c("G", "P"), unique_anno = FALSE) {
   #### FUSION_ps function body starts ####
   args = commandArgs(trailingOnly=TRUE)
   
   ########## Part1: defining the function to call wilcox.test for a matrix of a pair of samples ##########
-  
+
   options(warn=1)
   sncrna.family.paired_wilcox <- function(e1, e2)
   {
+    if (length(e1) == 0 || length(e2) == 0) return(NA)
+    if (length(e1) != length(e2)) return(NA)
+    if (sum(e1 != e2) == 0) return(NA)  # all values equal
     diff = e1 - e2
     diff = diff[diff != 0]
     r = rank(abs(diff))
@@ -162,6 +161,14 @@ NULL
   e = a[,3:ncol(a)] #### Separated the columns with expression values
   rownames(e) = a[,1]
   
+  #### if unique_anno is TRUE
+  if (unique_anno)
+  {
+    anno = anno[!grepl(";", anno$Annotation),]
+    z = match(anno$Sequence, rownames(e))
+    e = e[z,]
+  }
+  
   if (ncol(e) %% 2 != 0){
     print("Error: column numbers are not in pair in the matrix. Please check")
     return(NULL)
@@ -213,14 +220,10 @@ NULL
     sncrna_family = c(gtsrna_family, mtsrna_family, rsrna_family, ysrna_family, mirna_family, other_family)
   }
   
-  #### row_mean : mean RPM (default 0.1) threshold to retain the sncRNA species (rows) in the matrix
-  row_mean = as.integer(row_mean)
-  
   e = e[rowMeans(e) > row_mean,]   #### only retain the sncRNA species with mean RPM > row_mean
   
   #### p_correction_method : adjustment method ( default : the Bonferroni correction) for correcting or adjusting the p-values
-  #p_correction_method = "bonferroni"
-  #padj_method = as.character(padj_method)
+  
   if (missing(padj_method)) {
     padj_method = "bonferroni"
   } else if(padj_method == "bonferroni"){ 
@@ -243,24 +246,24 @@ NULL
     return(NULL)
   }
   else {
-  
-  
-  for (k in 1:length(sncrna_family))
-  {
-    sncrna_family_c = grepl(sncrna_family[k], anno$Annotation) 
-    if (grepl("rRNA", sncrna_family[k])) sncrna_family_c = (anno$Annotation==sncrna_family[k])
     
-    else if(grepl("mir", sncrna_family[k], ignore.case = TRUE)) sncrna_family_c = grepl((paste0("\\b", sncrna_family[k], "\\b")), anno$Annotation)
-    else if(grepl("let", sncrna_family[k])) sncrna_family_c = grepl((paste0("\\b", sncrna_family[k], "\\b")), anno$Annotation)
     
-    else sncrna_family_c = grepl(sncrna_family[k], anno$Annotation)
-    e_tmp = e[sncrna_family_c,]
-    count <- nrow(e_tmp)
-    if(count==0){
-      sncrna_family_new <- c(sncrna_family_new, sncrna_family[(k)])
+    for (k in 1:length(sncrna_family))
+    {
+      sncrna_family_c = grepl(sncrna_family[k], anno$Annotation) 
+      if (grepl("rRNA", sncrna_family[k])) sncrna_family_c = (anno$Annotation==sncrna_family[k])
+      
+      else if(grepl("mir", sncrna_family[k], ignore.case = TRUE)) sncrna_family_c = grepl((paste0("\\b", sncrna_family[k], "\\b")), anno$Annotation)
+      else if(grepl("let", sncrna_family[k])) sncrna_family_c = grepl((paste0("\\b", sncrna_family[k], "\\b")), anno$Annotation)
+      
+      else sncrna_family_c = grepl(sncrna_family[k], anno$Annotation)
+      e_tmp = e[sncrna_family_c,]
+      count <- nrow(e_tmp)
+      if(count==0){
+        sncrna_family_new <- c(sncrna_family_new, sncrna_family[(k)])
+      }
     }
-  }
-  sncrna_family <- sncrna_family[!sncrna_family %in% sncrna_family_new]
+    sncrna_family <- sncrna_family[!sncrna_family %in% sncrna_family_new]
   }
   ##### running the defined function for each pair in the matrix
   
@@ -298,6 +301,11 @@ NULL
       
       else is.sncrna_family = grepl(sncrna_family[k], anno$Annotation)
       e_tmp = e_ij[is.sncrna_family,]
+      #print(sum(is.na(e_tmp[,1])))
+      #print(sum(is.na(e_tmp[,2])))
+      #print(sum(e_tmp[,1] != e_tmp[,2]))
+      #print(length(e_tmp[,1]))
+      #print(length(e_tmp[,2]))
       out_tmp = sncrna.family.paired_wilcox(e_tmp[,1], e_tmp[,2])
       w_pos[k] = out_tmp[1]
       w_neg[k] = out_tmp[2]
@@ -323,6 +331,7 @@ NULL
 #' @param sncrna_family list of sncRNA families to be analysis for expression analysis study. Use "tsrna", "rsrna", "ysrna", or "mirna" for tsRNAs, rsRNAs, ysRNAs, or mirna, respectively. Use "other" for 'pRNA,snRNA and snoRNA'. For all, use any letter or number, eg. "a","b", "c", 1, 2, 3. By default (i.e. if no option specified) it will search for tryRNAs (tsRNAs, rsRNAs, and ysRNAs)
 #' @param top_species number (default 1000) of top species for each sncRNA family to be considered for analysis. It can help to reduce the run time of the analysis for the families (such as rsrna families) with large number of species. If time is not a concern, use high values such as 5000, 10000, etc.
 #' @param padj_method adjustment methods for correcting p-values. Use either "bonferroni" or "BH", where BH stands for Benjamini & Hochberg. By default (i.e. if no option specified) it will run for "bonferroni". 
+#' @param unique_anno filter the input matrix to consider only uniquely mapped reads (sncRNA species), meaning only the sncRNA species that map to a single parent RNA. By default, it is FALSE (i.e., all relevant sncRNA species in the matrix are considered, irrespective of whether they map to a single or multiple parent RNAs).
 #' @return It will return a final output in a data-frame with t-statistics, P_value, and adjusted P_value for each sncRNA family chosen for analysis
 #'
 #' @examples
@@ -331,54 +340,55 @@ NULL
 #' example_matrix1 <- system.file("extdata", "example_matrix1.txt", package = "FUSION")
 #' example_matrix2 <- system.file("extdata", "example_matrix2.txt", package = "FUSION")
 #' example_matrix3 <- system.file("extdata", "example_matrix3.txt", package = "FUSION")
-#' FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, row_mean = 1, top_species = 5000)   
-#' # For running differential expression analysis on example_matrix1.txt with 10 healthy samples (S1) 
+#' # Run differential expression analysis on example_matrix1.txt with 10 healthy samples (S1) 
 #' # and 16 patients (S2) at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs,
 #' # rsRNAs and ysRNAs) (default);
-#' FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16)    
-#' # For running differential expression analysis on example_matrix1.txt with 10 samples from 
+#' FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, row_mean = 1, top_species = 5000)
+#' # Run differential expression analysis on example_matrix1.txt with 10 samples from 
 #' # Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean (i.e., 0.1) and 
-#' # top_species threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-#' FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, padj_method = "BH") 
-#' # For running differential expression analysis on example_matrix1.txt with 10 samples from
+#' # top_species (i.e., 1000) threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
+#' FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16)    
+#' # Run differential expression analysis on example_matrix1.txt with 10 samples from
 #' # Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean (i.e., 0.1) and
-#' # top_species threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default)
+#' # top_species (i.e., 1000) threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default)
 #' # using BH (Benjamini & Hochberg) method for correcting or adjusting p-values;
-#' FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, sncrna_family = "a")    
-#' # For running differential expression analysis on example_matrix1.txt with 10 samples from
+#' FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, padj_method = "BH") 
+#' # Run differential expression analysis on example_matrix1.txt with 10 samples from
 #' # Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean threshold (i.e., 0.1)
-#' # and top_species for all sncRNA families;
-#' FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, sncrna_family = 0)    
-#' # For running differential expression analysis on example_matrix2.txt with 5 healthy 
+#' # and top_species (i.e., 1000) for all sncRNA families;
+#' FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, sncrna_family = "a")    
+#' # Run differential expression analysis on example_matrix2.txt with 5 healthy 
 #' # samples (S1) and 5 patients (S2) at default row_mean threshold  (i.e., 0.1) and 
-#' # top_species for all sncRNA families;
-#' FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, sncrna_family = "mirna", top_species = 1000) 
-#' # For running differential expression analysis on example_matrix2.txt with 5 samples from 
+#' # top_species (i.e., 1000) for all sncRNA families;
+#' FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, sncrna_family = 0)    
+#' # Run differential expression analysis on example_matrix2.txt with 5 samples from 
 #' # Condition1 (S1) and 5 samples from Condition2 (S2) at default row_mean threshold (i.e., 0.1) 
 #' # for 1000 top_species for miRNA families;
-#' FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, row_mean = 10, top_species = 2000, 
-#' sncrna_family = "rsrna")   
-#' # For running differential expression analysis on example_matrix2.txt with 5 samples from 
+#' FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, sncrna_family = "mirna", top_species = 1000) 
+#' # Run differential expression analysis on example_matrix2.txt with 5 samples from 
 #' # Condition1 (S1) and 5 samples from Condition2 (S2) at row_mean threshold of 10 for 
 #' # 2000 top_species for rsRNA families;
-#' FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, row_mean = 10, sncrna_family = "tsrna")   
-#' # For running differential expression analysis on example_matrix3.txt with 10 control 
-#' # samples (S1) and 8 treated samples (S2) at row_mean threshold of 10 for default (1000) 
+#' FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, row_mean = 10, top_species = 2000, 
+#' sncrna_family = "rsrna")   
+#' # Run differential expression analysis on example_matrix3.txt with 10 control 
+#' # samples (S1) and 8 treated samples (S2) at row_mean threshold of 10 for default (i.e., 1000) 
 #' # top_species for tsRNA families;
-#' FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, row_mean = 0.1, sncrna_family = "ysrna")    
-#' # For running differential expression analysis on example_matrix3.txt with 10 samples from 
+#' FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, row_mean = 10, sncrna_family = "tsrna")   
+#' # Run differential expression analysis on example_matrix3.txt with 10 samples from 
 #' # Condition1 (S1) and 8 samples from Condition2 (S2) at row_mean threshold of 0.1 for 
-#' # default (1000) top_species for ysRNA families;
-#' FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, top_species = 100, sncrna_family = "other")   
-#' # For running differential expression analysis on example_matrix3.txt with 10 samples from 
-#' # Condition1 (S1) and 8 samples from Condition2 (S2) at default row_mean threshold  (i.e., 0.1)
+#' # default (i.e., 1000) top_species for ysRNA families;
+#' FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, row_mean = 0.1, sncrna_family = "ysrna")    
+#' # Run differential expression analysis on example_matrix3.txt with 10 samples from 
+#' # Condition1 (S1) and 8 samples from Condition2 (S2) considering only uniquely mapped reads
+#' # (sncRNA species that map to a single parent RNA) at default row_mean threshold  (i.e., 0.1)
 #' # for 100 top_species for other (pRNA,snRNA and snoRNA) sncRNA families;
+#' FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, top_species = 100, sncrna_family = "other",  unique_anno = TRUE)   
 #' # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g.:  
 #' # options(max.print = 1e6); sink("~/output.txt"); 
 #' # FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16); sink()
 #' @export
 
-  FUSION_ms <- function(a, S1, S2, row_mean = getOption("row_mean", "0.1"), sncrna_family = c("tsrna", "rsrna", "ysrna", "mirna", "other"), top_species = getOption("max_num", "1000"), padj_method = c("bonferroni", "BH")){
+FUSION_ms <- function(a, S1, S2, row_mean = getOption("row_mean", "0.1"), sncrna_family = c("tsrna", "rsrna", "ysrna", "mirna", "other"), top_species = getOption("max_num", "1000"), padj_method = c("bonferroni", "BH"), unique_anno = FALSE){
   #### FUSION_ms function body starts ####
   args = commandArgs(trailingOnly=TRUE)
   
@@ -395,6 +405,14 @@ NULL
   anno = a[,1:2]  #### Separated the columns with unique Sequence (or ID) and their Annotation information
   e = a[,3:ncol(a)] #### Separated the columns with expression values
   rownames(e) = a[,1]
+  
+  #### if unique_anno is TRUE
+  if (unique_anno)
+  {
+    anno = anno[!grepl(";", anno$Annotation),]
+    z = match(anno$Sequence, rownames(e))
+    e = e[z,]
+  }
   
   #### S1 and S2: Number of samples from Condition1 Condition2
   #### S1 : number of samples from Condition1
@@ -454,12 +472,8 @@ NULL
   #### max_num : number (default 1000) of top species for each sncRNA family to be considered for analysis
   max_num = as.numeric(top_species)
   
-  #### row_mean : mean RPM (default 0.1) threshold to retain the sncRNA species (rows) in the matrix
-  row_mean = as.integer(row_mean)
-  
   #### p_correction_method : adjustment method ( default : the Bonferroni correction) for correcting or adjusting the p-values
-  #p_correction_method = "bonferroni"
-  #padj_method = as.character(padj_method)
+  
   if (missing(padj_method)) {
     padj_method = "bonferroni"
   } else if(padj_method == "bonferroni"){ 
@@ -494,19 +508,19 @@ NULL
   if (length(sncrna_family) < 1) { 
     print ("There are no species annotated for the chosen sncRNA family in the input matrix at the given threshold")
     return(NULL)
-    }
-  else {
-  for (k in 1:length(sncrna_family))
-  {
-    if (grepl("rRNA", sncrna_family[k])) anno_k = anno[anno$Annotation==sncrna_family[k],]
-    
-    else if(grepl("mir", sncrna_family[k], ignore.case = TRUE)) anno_k = anno[grepl(paste0("\\b", sncrna_family[k], "\\b"), anno$Annotation), ]
-    else if(grepl("let", sncrna_family[k])) anno_k = anno[grepl(paste0("\\b", sncrna_family[k], "\\b"), anno$Annotation), ]
-    
-    else anno_k = anno[grepl(sncrna_family[k], anno$Annotation),]
-    sncrna_family_species_n[k] = nrow(anno_k)
   }
-   }
+  else {
+    for (k in 1:length(sncrna_family))
+    {
+      if (grepl("rRNA", sncrna_family[k])) anno_k = anno[anno$Annotation==sncrna_family[k],]
+      
+      else if(grepl("mir", sncrna_family[k], ignore.case = TRUE)) anno_k = anno[grepl(paste0("\\b", sncrna_family[k], "\\b"), anno$Annotation), ]
+      else if(grepl("let", sncrna_family[k])) anno_k = anno[grepl(paste0("\\b", sncrna_family[k], "\\b"), anno$Annotation), ]
+      
+      else anno_k = anno[grepl(sncrna_family[k], anno$Annotation),]
+      sncrna_family_species_n[k] = nrow(anno_k)
+    }
+  }
   sncrna_family
   sncrna_family_species_n
   
@@ -554,6 +568,7 @@ NULL
 #' @param sncrna_family list of sncRNA families to be analysis for expression analysis study. Use "tsrna", "rsrna", "ysrna", or "mirna" for tsRNAs, rsRNAs, ysRNAs, or mirna, respectively. Use "other" for 'pRNA,snRNA and snoRNA'. For all, use any letter or number, eg. "a","b", "c", 1, 2, 3. By default (i.e. if no option specified) it will search for tryRNAs (tsRNAs, rsRNAs, and ysRNAs)
 #' @param top_species number (default 1000) of top species for each sncRNA family to be considered for analysis. It can help to reduce the run time of the analysis for the families (such as rsrna families) with large number of species. If time is not a concern, use high values such as 5000, 10000, etc.
 #' @param padj_method adjustment methods for correcting p-values. Use either "bonferroni" or "BH", where BH stands for Benjamini & Hochberg. By default (i.e. if no option specified) it will run for "bonferroni". 
+#' @param unique_anno filter the input matrix to consider only uniquely mapped reads (sncRNA species), meaning only the sncRNA species that map to a single parent RNA. By default, it is FALSE (i.e., all relevant sncRNA species in the matrix are considered, irrespective of whether they map to a single or multiple parent RNAs).
 #' @return It will return a final output in a data-frame with t-statistics, P_value, and adjusted P_value for each sncRNA family chosen for analysis
 #'
 #' @examples
@@ -564,28 +579,28 @@ NULL
 #' example_condition1 <- system.file("extdata", "example_condition1.txt", package = "FUSION")
 #' example_condition2 <- system.file("extdata", "example_condition2.txt", package = "FUSION")
 #' example_condition3 <- system.file("extdata", "example_condition3.txt", package = "FUSION")
-#' FUSION_msmc(a = example_matrix_cl, cl = example_condition1, row_mean = 1, top_species = 5000)   
-#' # For running differential expression analysis on example_matrix_cl.txt with 18 samples as per
+#' # Run differential expression analysis on example_matrix_cl.txt with 18 samples as per
 #' # the conditions specified (i.e., 3 different conditions with 6 samples each) in the file 
 #' # example_condition1.txt at row_mean threshold of 1 for 5000 top_species for 
 #' # sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-#' FUSION_msmc(a = example_matrix_cl, cl = example_condition2, row_mean = 1, top_species = 5000)   
-#' # For running differential expression analysis on example_matrix_cl.txt with 18 samples as per
+#' FUSION_msmc(a = example_matrix_cl, cl = example_condition1, row_mean = 1, top_species = 5000) 
+#' # Run differential expression analysis on example_matrix_cl.txt with 18 samples as per
 #' # the conditions specified (i.e., 4 different conditions with condition 1, 2, and 3 having five
 #' # samples each, while last three samples are representing the condition 4) in the file 
 #' # example_condition2.txt at row_mean threshold of 1 for 5000 top_species for 
 #' # sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
-#' FUSION_msmc(a = example_matrix_cl, cl = example_condition3, row_mean = 10, sncrna_family = "tsrna") 
-#' # For running differential expression analysis on example_matrix_cl.txt with 18 samples as per
+#' FUSION_msmc(a = example_matrix_cl, cl = example_condition2, row_mean = 1, top_species = 5000)   
+#' # Run differential expression analysis on example_matrix_cl.txt with 18 samples as per
 #' # the conditions specified (i.e., 2 different conditions with condition 1, and 2 having  10 and 
 #' # 8 samples, respectively) in the file example_condition3.txt at row_mean threshold of 10 for 
 #' # default (1000) top_species for tsRNA families. 
+#' FUSION_msmc(a = example_matrix_cl, cl = example_condition3, row_mean = 10, sncrna_family = "tsrna") 
 #' # Note:  If you want to save the terminal/console output to a file, use sink() command. 
 #' # e.g.,:  options(max.print = 1e6); sink("~/output.txt"); 
 #' # FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16); sink()
 #' @export
 
-  FUSION_msmc <- function(a, cl, row_mean = getOption("row_mean", "0.1"), sncrna_family = c("tsrna", "rsrna", "ysrna", "mirna", "other"), top_species = getOption("max_num", "1000"), padj_method = c("bonferroni", "BH")){
+FUSION_msmc <- function(a, cl, row_mean = getOption("row_mean", "0.1"), sncrna_family = c("tsrna", "rsrna", "ysrna", "mirna", "other"), top_species = getOption("max_num", "1000"), padj_method = c("bonferroni", "BH"), unique_anno = FALSE){
   #### FUSION_msmc function body starts ####
   args = commandArgs(trailingOnly=TRUE)
   
@@ -602,6 +617,14 @@ NULL
   anno = a[,1:2]  #### Separated the columns with unique Sequence (or ID) and their Annotation information
   e = a[,3:ncol(a)] #### Separated the columns with expression values
   rownames(e) = a[,1]
+  
+  #### if unique_anno is TRUE
+  if (unique_anno)
+  {
+    anno = anno[!grepl(";", anno$Annotation),]
+    z = match(anno$Sequence, rownames(e))
+    e = e[z,]
+  }
   
   #### cl: a vector specifying samples from different conditions (1 and 2) provided as file
   cl <- scan(cl, sep = ",")  
@@ -660,12 +683,9 @@ NULL
   #### max_num : number (default 1000) of top species for each sncRNA family to be considered for analysis
   max_num = as.numeric(top_species)
   
-  #### row_mean : mean RPM (default 0.1) threshold to retain the sncRNA species (rows) in the matrix
-  row_mean = as.integer(row_mean)
   
   #### p_correction_method : adjustment method ( default : the Bonferroni correction) for correcting or adjusting the p-values
-  #p_correction_method = "bonferroni"
-  #padj_method = as.character(padj_method)
+  
   if (missing(padj_method)) {
     padj_method = "bonferroni"
   } else if(padj_method == "bonferroni"){ 
@@ -703,16 +723,16 @@ NULL
   }
   else {
     
-  for (k in 1:length(sncrna_family))
-  {
-    if (grepl("rRNA", sncrna_family[k])) anno_k = anno[anno$Annotation==sncrna_family[k],]
-    
-    else if(grepl("mir", sncrna_family[k], ignore.case = TRUE)) anno_k = anno[grepl(paste0("\\b", sncrna_family[k], "\\b"), anno$Annotation), ]
-    else if(grepl("let", sncrna_family[k])) anno_k = anno[grepl(paste0("\\b", sncrna_family[k], "\\b"), anno$Annotation), ]
-    
-    else anno_k = anno[grepl(sncrna_family[k], anno$Annotation),]
-    sncrna_family_species_n[k] = nrow(anno_k)
-  }
+    for (k in 1:length(sncrna_family))
+    {
+      if (grepl("rRNA", sncrna_family[k])) anno_k = anno[anno$Annotation==sncrna_family[k],]
+      
+      else if(grepl("mir", sncrna_family[k], ignore.case = TRUE)) anno_k = anno[grepl(paste0("\\b", sncrna_family[k], "\\b"), anno$Annotation), ]
+      else if(grepl("let", sncrna_family[k])) anno_k = anno[grepl(paste0("\\b", sncrna_family[k], "\\b"), anno$Annotation), ]
+      
+      else anno_k = anno[grepl(sncrna_family[k], anno$Annotation),]
+      sncrna_family_species_n[k] = nrow(anno_k)
+    }
   }
   sncrna_family
   sncrna_family_species_n

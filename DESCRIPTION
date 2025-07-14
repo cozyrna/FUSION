@@ -1,7 +1,7 @@
 Package: FUSION
 Type: Package
 Title: FUSION - Family-level Unique Small ncRNA IntegratION
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
     person("Hukam", "Rawal", role = "aut", comment = c(ORCID = "0000-0002-2727-9721")),
     person("Qi", "Chen", role = "aut"),
@@ -20,5 +20,4 @@ License: GPL-3 + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2024-09-24 20:09:15 UTC; tahoe
 Author: Hukam Rawal [aut] (<https://orcid.org/0000-0002-2727-9721>), Qi Chen [aut], Tong Zhou [aut, cre]
