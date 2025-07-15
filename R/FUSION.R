@@ -96,8 +96,6 @@ FUSION_ps <- function(a, row_mean = getOption("row_mean", "0.1"), sncrna_family 
   sncrna.family.paired_wilcox <- function(e1, e2)
   {
     if (length(e1) == 0 || length(e2) == 0) return(NA)
-    if (length(e1) != length(e2)) return(NA)
-    if (sum(e1 != e2) == 0) return(NA)  # all values equal
     diff = e1 - e2
     diff = diff[diff != 0]
     r = rank(abs(diff))
@@ -301,11 +299,6 @@ FUSION_ps <- function(a, row_mean = getOption("row_mean", "0.1"), sncrna_family 
       
       else is.sncrna_family = grepl(sncrna_family[k], anno$Annotation)
       e_tmp = e_ij[is.sncrna_family,]
-      #print(sum(is.na(e_tmp[,1])))
-      #print(sum(is.na(e_tmp[,2])))
-      #print(sum(e_tmp[,1] != e_tmp[,2]))
-      #print(length(e_tmp[,1]))
-      #print(length(e_tmp[,2]))
       out_tmp = sncrna.family.paired_wilcox(e_tmp[,1], e_tmp[,2])
       w_pos[k] = out_tmp[1]
       w_neg[k] = out_tmp[2]
