@@ -4,11 +4,11 @@
 \alias{FUSION}
 \title{FUSION  - Family-level Unique Small RNA Integration across samples using expression matrix}
 \arguments{
-\item{a}{a matrix with first and second column as "Sequence" (or ID) and "Annotation", respectively. Sequence (or ID) must be unique.  Rest of the columns provides RPM or expression values from different samples under study}
+\item{a}{a matrix with first and second column as "Sequence" (or ID) and "Annotation", respectively. Sequence (or ID) must be unique.  Rest of the columns provides RPM or other normalized expression values from different samples under study}
 
 \item{row_mean}{mean RPM (default 0.1) threshold to retain the sncRNA species (rows) in the matrix}
 
-\item{sncrna_family}{list of sncRNA families to be analyzed for expression analysis study. Use "tsrna", "rsrna", "ysrna", or "mirna" for tsRNAs, rsRNAs, ysRNAs, or mirna, respectively. Use "other" for 'pRNA, snRNA and snoRNA'. For all, use any letter or number, eg. "a","b", "c", 1, 2, 3. By default (i.e. if no option specified) it will search for tryRNAs (tsRNAs, rsRNAs, and ysRNAs)}
+\item{sncrna_family}{list of sncRNA families to be analyzed in the abundance analysis study. Use "tsrna", "rsrna", "ysrna", or "mirna" for tsRNAs, rsRNAs, ysRNAs, or mirna, respectively. Use "other" for 'pRNA, snRNA and snoRNA'. For all, use any letter or number, eg. "a","b", "c", 1, 2, 3. By default (i.e. if no option specified) it will search for tryRNAs (tsRNAs, rsRNAs, and ysRNAs)}
 }
 \value{
 with FUSION_ps, it will return, for each pair in the input matrix, an output data-frame with w_positive, w_negative, P_value, and adjusted P_value for each sncRNA family chosen for analysis.
@@ -22,7 +22,7 @@ FUSION  - Family-level Unique Small RNA Integration across samples using express
 }
 \details{
 For more information, see the user manual:
-\code{browseURL(system.file("docs/FUSION_1.0.1_User_Manual.pdf", package = "FUSION"))}
+\code{browseURL(system.file("docs/FUSION_v1.0.1_User_Manual.pdf", package = "FUSION"))}
 
 After installing the package FUSION, call the library as: library(FUSION).
 \cr

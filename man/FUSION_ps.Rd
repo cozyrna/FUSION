@@ -2,7 +2,7 @@
 % Please edit documentation in R/FUSION.R
 \name{FUSION_ps}
 \alias{FUSION_ps}
-\title{FUSION_ps - Differential expression analysis of sncRNA families in paired data samples using expression matrix}
+\title{FUSION_ps - Differential abundance analysis of sncRNA families in paired data samples using expression matrix}
 \usage{
 FUSION_ps(
   a,
@@ -14,11 +14,11 @@ FUSION_ps(
 )
 }
 \arguments{
-\item{a}{a matrix with first and second column as "Sequence" (or ID) and "Annotation", respectively. Sequence (or ID) must be unique.  Rest of the columns provides RPM or expression values from different samples under study, such as first half of those belongs to the samples from Condition1 (such as control or from healthy tissue) and second half belongs to the samples from Condition2 (such as treated or infected tissue)}
+\item{a}{a matrix with first and second column as "Sequence" (or ID) and "Annotation", respectively. Sequence (or ID) must be unique.  Rest of the columns provides RPM or other normalized expression values from different samples under study, such as first half of those belongs to the samples from Condition1 (such as control or from healthy tissue) and second half belongs to the samples from Condition2 (such as treated or infected tissue)}
 
 \item{row_mean}{mean RPM (default 0.1) threshold to retain the sncRNA species (rows) in the matrix}
 
-\item{sncrna_family}{list of sncRNA families to be analysis for expression analysis study. Use "tsrna", "rsrna", "ysrna", or "mirna" for tsRNAs, rsRNAs, ysRNAs, or mirna, respectively. Use "other" for 'pRNA,snRNA and snoRNA'. For all, use any letter or number, eg. "a","b", "c", 1, 2, 3. By default (i.e. if no option specified) it will search for tryRNAs (tsRNAs, rsRNAs, and ysRNAs)}
+\item{sncrna_family}{list of sncRNA families to be analysis for abundance analysis study. Use "tsrna", "rsrna", "ysrna", or "mirna" for tsRNAs, rsRNAs, ysRNAs, or mirna, respectively. Use "other" for 'pRNA,snRNA and snoRNA'. For all, use any letter or number, eg. "a","b", "c", 1, 2, 3. By default (i.e. if no option specified) it will search for tryRNAs (tsRNAs, rsRNAs, and ysRNAs)}
 
 \item{padj_method}{adjustment methods for correcting p-values. Use either "bonferroni" or "BH", where BH stands for Benjamini & Hochberg. By default (i.e., if no option specified) it will run for "bonferroni".}
 
@@ -30,7 +30,7 @@ FUSION_ps(
 For each pair in the input matrix, it will return an output data-frame with w_positive, w_negative, P_value, and adjusted P_value for each sncRNA family chosen for analysis.
 }
 \description{
-FUSION_ps - Differential expression analysis of sncRNA families in paired data samples using expression matrix
+FUSION_ps - Differential abundance analysis of sncRNA families in paired data samples using expression matrix
 }
 \examples{
 # Note:  After installation, one can find the example files in "../FUSION/extdata/"
@@ -39,39 +39,39 @@ example_matrix_p1 <- system.file("extdata", "example_matrix_p1.txt", package = "
 example_matrix_p2 <- system.file("extdata", "example_matrix_p2.txt", package = "FUSION")
 example_matrix_p3 <- system.file("extdata", "example_matrix_p3.txt", package = "FUSION")
 example_matrix_p4 <- system.file("extdata", "example_matrix_p4.txt", package = "FUSION")
-# Run differential expression analysis on example_matrix_p1.txt (5 pairs of samples) at default
+# Run differential abundance analysis on example_matrix_p1.txt (5 pairs of samples) at default
 # row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
 FUSION_ps(a = example_matrix_p1) 
-# Run differential expression analysis on example_matrix_p1.txt (5 pairs of samples) at default
+# Run differential abundance analysis on example_matrix_p1.txt (5 pairs of samples) at default
 # row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) using
 # BH (Benjamini & Hochberg) method for correcting or adjusting p-values;
 FUSION_ps(a = example_matrix_p1, padj_method = "BH") 
-# Run differential expression analysis on example_matrix_p1.txt (5 pairs of samples) at row_mean
+# Run differential abundance analysis on example_matrix_p1.txt (5 pairs of samples) at row_mean
 # threshold of 0.5 for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
 FUSION_ps(a = example_matrix_p1, row_mean = 0.5) 
-# Run differential expression analysis on example_matrix_p2.txt (10 pairs of samples) at default
+# Run differential abundance analysis on example_matrix_p2.txt (10 pairs of samples) at default
 # row_mean threshold (i.e., 0.1) for all sncRNA families;
 FUSION_ps(a = example_matrix_p2, sncrna_family = "a")
-# Run differential expression analysis on example_matrix_p2.txt (10 pairs of samples) at default
+# Run differential abundance analysis on example_matrix_p2.txt (10 pairs of samples) at default
 # row_mean threshold (i.e., 0.1) for all sncRNA families;
 FUSION_ps(a = example_matrix_p2, sncrna_family = 0)
-# Run differential expression analysis on example_matrix_p2.txt (10 pairs of samples) at default
+# Run differential abundance analysis on example_matrix_p2.txt (10 pairs of samples) at default
 # row_mean threshold (i.e., 0.1) for miRNA families;
 FUSION_ps(a = example_matrix_p2, sncrna_family = "mirna")
-# Run differential expression analysis on example_matrix_p2.txt (4 pairs of samples) at row_mean
+# Run differential abundance analysis on example_matrix_p2.txt (4 pairs of samples) at row_mean
 # threshold of 0.5 for tsRNA families;
 FUSION_ps(a = example_matrix_p3, row_mean = 0.5, sncrna_family = "tsrna")  
-# Run differential expression analysis on example_matrix_p2.txt (4 pairs of samples) at row_mean
+# Run differential abundance analysis on example_matrix_p2.txt (4 pairs of samples) at row_mean
 # threshold of 0.1 for for ysRNA families;
 FUSION_ps(a = example_matrix_p3, row_mean = 0.1, sncrna_family = "ysrna")  
-# Run differential expression analysis on example_matrix_p2.txt (4 pairs of samples) at default
+# Run differential abundance analysis on example_matrix_p2.txt (4 pairs of samples) at default
 # row_mean threshold (i.e., 0.1) for other (pRNA,snRNA and snoRNA) sncRNA families;
 FUSION_ps(a = example_matrix_p3, sncrna_family = "other")  
-# Run differential expression analysis on example_matrix_p4.txt (5 pairs of samples) considering
+# Run differential abundance analysis on example_matrix_p4.txt (5 pairs of samples) considering
 # only uniquely mapped reads (sncRNA species that map to a single parent RNA) at default
 # row_mean threshold (i.e., 0.1) for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default) and 
 # samples are arranged in as pairs of columns;
-FUSION_ps(a = example_matrix_p4,order = "P", unique_anno = TRUE) 
+FUSION_ps(a = example_matrix_p4, unique_anno = TRUE, order = "P") 
 # Note:  If you want to save the terminal/console output to a file, use sink() command. e.g.:
 # options(max.print = 1e6); sink("~/output.txt"); FUSION_ps(a = "example_matrix_p1.txt"); sink()
 }

@@ -1,5 +1,5 @@
 
-[User Manual](inst/docs/FUSION_1.0.1_User_Manual.pdf)
+[User Manual](inst/docs/FUSION_v1.0.1_User_Manual.pdf)
 
 # FUSION (Family-level Unique Small RNA Integration) Version 1.0.1
 
@@ -20,11 +20,11 @@ library(FUSION)
 
 #### There are three functions in this package : 
 
-#### FUSION_ps - Diferential expression analysis of sncRNA families in paired data samples using expression matrix
+#### FUSION_ps - Diferential abundance analysis of sncRNA families in paired data samples using expression matrix
 
-#### FUSION_ms - Diferential expression analysis of sncRNA families in multiple samples data using expression matrix
+#### FUSION_ms - Diferential abundance analysis of sncRNA families in multiple samples data using expression matrix
 
-#### FUSION_msmc - Diferential expression analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix
+#### FUSION_msmc - Diferential abundance analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix
  
 #### Ask help for the description and help menus of each of these functions :
 

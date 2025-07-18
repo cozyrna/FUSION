@@ -2,7 +2,7 @@
 % Please edit documentation in R/FUSION.R
 \name{FUSION_ms}
 \alias{FUSION_ms}
-\title{FUSION_ms - Differential expression analysis of sncRNA families in multiple samples data using expression matrix}
+\title{FUSION_ms - Differential abundance analysis of sncRNA families in multiple samples data using expression matrix}
 \usage{
 FUSION_ms(
   a,
@@ -16,7 +16,7 @@ FUSION_ms(
 )
 }
 \arguments{
-\item{a}{a matrix with first and second column as "Sequence" (or ID) and "Annotation", respectively. Rest of the columns provides RPM or expression values from different samples under study. Sequence (or ID) must be unique.}
+\item{a}{a matrix with first and second column as "Sequence" (or ID) and "Annotation", respectively. Rest of the columns provides RPM or other normalized expression values from different samples under study. Sequence (or ID) must be unique.}
 
 \item{S1}{Number of samples from Condition1 (such as control or from healthy tissue)}
 
@@ -24,7 +24,7 @@ FUSION_ms(
 
 \item{row_mean}{mean RPM (default 0.1) threshold to retain the sncRNA species (rows) in the matrix}
 
-\item{sncrna_family}{list of sncRNA families to be analysis for expression analysis study. Use "tsrna", "rsrna", "ysrna", or "mirna" for tsRNAs, rsRNAs, ysRNAs, or mirna, respectively. Use "other" for 'pRNA,snRNA and snoRNA'. For all, use any letter or number, eg. "a","b", "c", 1, 2, 3. By default (i.e. if no option specified) it will search for tryRNAs (tsRNAs, rsRNAs, and ysRNAs)}
+\item{sncrna_family}{list of sncRNA families to be analyzed in the abundance analysis study. Use "tsrna", "rsrna", "ysrna", or "mirna" for tsRNAs, rsRNAs, ysRNAs, or mirna, respectively. Use "other" for 'pRNA,snRNA and snoRNA'. For all, use any letter or number, eg. "a","b", "c", 1, 2, 3. By default (i.e. if no option specified) it will search for tryRNAs (tsRNAs, rsRNAs, and ysRNAs)}
 
 \item{top_species}{number (default 1000) of top species for each sncRNA family to be considered for analysis. It can help to reduce the run time of the analysis for the families (such as rsrna families) with large number of species. If time is not a concern, use high values such as 5000, 10000, etc.}
 
@@ -36,7 +36,7 @@ FUSION_ms(
 It will return a final output in a data-frame with t-statistics, P_value, and adjusted P_value for each sncRNA family chosen for analysis
 }
 \description{
-FUSION_ms - Differential expression analysis of sncRNA families in multiple samples data using expression matrix
+FUSION_ms - Differential abundance analysis of sncRNA families in multiple samples data using expression matrix
 }
 \examples{
 # Note:  After installation, one can find the example files in "../FUSION/extdata/"
@@ -44,45 +44,45 @@ FUSION_ms - Differential expression analysis of sncRNA families in multiple samp
 example_matrix1 <- system.file("extdata", "example_matrix1.txt", package = "FUSION")
 example_matrix2 <- system.file("extdata", "example_matrix2.txt", package = "FUSION")
 example_matrix3 <- system.file("extdata", "example_matrix3.txt", package = "FUSION")
-# Run differential expression analysis on example_matrix1.txt with 10 healthy samples (S1) 
+# Run differential abundance analysis on example_matrix1.txt with 10 healthy samples (S1) 
 # and 16 patients (S2) at row_mean threshold of 1 for 5000 top_species for sncRNA families (tsRNAs,
 # rsRNAs and ysRNAs) (default);
 FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, row_mean = 1, top_species = 5000)
-# Run differential expression analysis on example_matrix1.txt with 10 samples from 
+# Run differential abundance analysis on example_matrix1.txt with 10 samples from 
 # Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean (i.e., 0.1) and 
 # top_species (i.e., 1000) threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default);
 FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16)    
-# Run differential expression analysis on example_matrix1.txt with 10 samples from
+# Run differential abundance analysis on example_matrix1.txt with 10 samples from
 # Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean (i.e., 0.1) and
 # top_species (i.e., 1000) threshold for sncRNA families (tsRNAs, rsRNAs and ysRNAs) (default)
 # using BH (Benjamini & Hochberg) method for correcting or adjusting p-values;
 FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, padj_method = "BH") 
-# Run differential expression analysis on example_matrix1.txt with 10 samples from
+# Run differential abundance analysis on example_matrix1.txt with 10 samples from
 # Condition1 (S1) and 16 samples from Condition2 (S2) at default row_mean threshold (i.e., 0.1)
 # and top_species (i.e., 1000) for all sncRNA families;
 FUSION_ms(a = example_matrix1, S1 = 10, S2 = 16, sncrna_family = "a")    
-# Run differential expression analysis on example_matrix2.txt with 5 healthy 
+# Run differential abundance analysis on example_matrix2.txt with 5 healthy 
 # samples (S1) and 5 patients (S2) at default row_mean threshold  (i.e., 0.1) and 
 # top_species (i.e., 1000) for all sncRNA families;
 FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, sncrna_family = 0)    
-# Run differential expression analysis on example_matrix2.txt with 5 samples from 
+# Run differential abundance analysis on example_matrix2.txt with 5 samples from 
 # Condition1 (S1) and 5 samples from Condition2 (S2) at default row_mean threshold (i.e., 0.1) 
 # for 1000 top_species for miRNA families;
 FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, sncrna_family = "mirna", top_species = 1000) 
-# Run differential expression analysis on example_matrix2.txt with 5 samples from 
+# Run differential abundance analysis on example_matrix2.txt with 5 samples from 
 # Condition1 (S1) and 5 samples from Condition2 (S2) at row_mean threshold of 10 for 
 # 2000 top_species for rsRNA families;
 FUSION_ms(a = example_matrix2, S1 = 5, S2 = 5, row_mean = 10, top_species = 2000, 
 sncrna_family = "rsrna")   
-# Run differential expression analysis on example_matrix3.txt with 10 control 
+# Run differential abundance analysis on example_matrix3.txt with 10 control 
 # samples (S1) and 8 treated samples (S2) at row_mean threshold of 10 for default (i.e., 1000) 
 # top_species for tsRNA families;
 FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, row_mean = 10, sncrna_family = "tsrna")   
-# Run differential expression analysis on example_matrix3.txt with 10 samples from 
+# Run differential abundance analysis on example_matrix3.txt with 10 samples from 
 # Condition1 (S1) and 8 samples from Condition2 (S2) at row_mean threshold of 0.1 for 
 # default (i.e., 1000) top_species for ysRNA families;
 FUSION_ms(a = example_matrix3, S1 = 10, S2 = 8, row_mean = 0.1, sncrna_family = "ysrna")    
-# Run differential expression analysis on example_matrix3.txt with 10 samples from 
+# Run differential abundance analysis on example_matrix3.txt with 10 samples from 
 # Condition1 (S1) and 8 samples from Condition2 (S2) considering only uniquely mapped reads
 # (sncRNA species that map to a single parent RNA) at default row_mean threshold  (i.e., 0.1)
 # for 100 top_species for other (pRNA,snRNA and snoRNA) sncRNA families;

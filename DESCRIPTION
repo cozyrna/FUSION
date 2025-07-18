@@ -12,10 +12,10 @@ Imports:
     stats,
     utils,
     usethis
-Description: FUSION has two modules FUSION_ps and FUSION_ms for diferential expression analysis of sncRNA families in paired data samples (FUSION_ps) and multiple sample data (FUSION_ms) using expression matrix as input.
-    FUSION_ps performs differential expression analysis of sncRNA families in paired data samples.
-    FUSION_ms performs differential expression analysis of sncRNA families in multiple samples data.
-    Further,to perform differntial expression analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix, one can use the function FUSION_msmc. 
+Description: FUSION has two modules FUSION_ps and FUSION_ms for diferential abundance analysis of sncRNA families in paired data samples (FUSION_ps) and multiple sample data (FUSION_ms) using expression matrix as input.
+    FUSION_ps performs differential abundance analysis of sncRNA families in paired data samples.
+    FUSION_ms performs differential abundance analysis of sncRNA families in multiple samples data.
+    Further,to perform differntial abundance analysis of sncRNA families in multiple samples data with multiple conditions using expression matrix, one can use the function FUSION_msmc. 
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.3.2
