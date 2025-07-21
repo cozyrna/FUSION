@@ -45,4 +45,4 @@ FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16, row_mean = 1, t
 
 FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition1.txt", row_mean = 1, top_species = 5000) 
 
-DOI: 10.5281/zenodo.16281886
+DOI: 10.5281/zenodo.16281886 (https://doi.org/10.5281/zenodo.16281886)
