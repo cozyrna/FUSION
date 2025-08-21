@@ -37,7 +37,7 @@ library(FUSION)
 #### Note: If want to run examples straight in the Help documentation, it is necessary to first set working directory to the base folder of the installed package FUSION. Such as : setwd("/home/..../R/.../FUSION/"), or simply provide the exact path of the appropriate example matrix files.
 
 
-### Here are the sample runs with example data sets:
+#### Here are the sample runs with example data sets:
 
 FUSION_ps(a = "./extdata/example_matrix_p1.txt", row_mean = 0.5)
 
@@ -45,8 +45,8 @@ FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16, row_mean = 1, t
 
 FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition1.txt", row_mean = 1, top_species = 5000) 
 
-### The R script `plot_fusion_run.R` (available in the installed package under `scripts/`) provides a simple way to visualize the position of dysregulated RNA species along a parental RNA.
-### To use:
+#### The R script `plot_fusion_run.R` (available in the installed package under `scripts/`) provides a simple way to visualize the position of dysregulated RNA species along a parental RNA.
+#### To use:
 ```r
 script_path <- system.file("scripts", "plot_fusion_run.R", package = "FUSION")
 file.edit(script_path)  # Open and modify input file paths as needed
@@ -56,6 +56,6 @@ Make sure to update:
     The path to your FASTA file
     The path to your expression data file
     The desired coordinates (optional)
-```r
-### DOI: 10.5281/zenodo.16922726 (https://doi.org/10.5281/zenodo.16922726)
+```
+#### DOI: 10.5281/zenodo.16922726 (https://doi.org/10.5281/zenodo.16922726)
 
