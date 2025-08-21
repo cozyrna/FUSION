@@ -46,7 +46,7 @@ FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16, row_mean = 1, t
 FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition1.txt", row_mean = 1, top_species = 5000) 
 
 ### The R script plot_fusion_run.R (available in the script/ folder) can be used to generate a plot visualizing the positions of dysregulated RNA species along the length of a parental RNA sequence.
-# Example usage
-source("scripts/plot_fusion_run.R")
+### Example usage
+source("scripts/plot_fusion.R")
 
 DOI: 10.5281/zenodo.16281886 (https://doi.org/10.5281/zenodo.16281886)
