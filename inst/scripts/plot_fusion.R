@@ -7,6 +7,19 @@ library(seqinr)
 #pos_coord: start and end positions within the parental RNA to be visualized
 #max.mismatch: maximum number of mismatch (default 1)
 
+# === Set input files ===
+# By default, use example files bundled with the package:
+parental_rna_file <- system.file("extdata", "human_rRNA_28S.fa", package = "FUSION")
+input_rpm_file <- system.file("extdata", "example_visualization_data.txt", package = "FUSION")
+
+# === To use your own data, uncomment and edit the lines below ===
+# parental_rna_file <- "/full/path/to/your/input.fa"
+# input_rpm_file <- "/full/path/to/your/input_rpm.txt"
+
+# === Load parental RNA sequence ===
+parental_rna <- unlist(read.fasta(parental_rna_file, seqtype = "DNA", as.string = TRUE, forceDNAtolower = FALSE))
+
+# === Plotting function ===
 plot.fusion_ps <- function(input_rpm_file, parental_rna, top_rna_num = 100, pos_coord = NULL, max.mismatch = 1)
 {
   a = read.delim(input_rpm_file, comment.char="#")
@@ -43,23 +56,13 @@ plot.fusion_ps <- function(input_rpm_file, parental_rna, top_rna_num = 100, pos_
   axis(2)
 }
 
-pdf(paste0("./Parent_RNA_plot.pdf"))  ##add desire output file name with path
-parental_rna = unlist(read.fasta("./extdata/human_rRNA_28S.fa", seqtype="DNA", as.string=T, forceDNAtolower=F))   ##add the proper path of the file "human_rRNA_28S.fa"
+
+# === Generate the plots ===
+pdf("Parent_RNA_plot.pdf")
 #plot the whole parental RNA
-plot.fusion_ps("./extdata/example_visualization_data.txt", parental_rna)    ##add the proper path of the file "example_visualization_data.txt"
+plot.fusion_ps(input_rpm_file, parental_rna)
 #plot the zoomed-in view of the specified region within the parental RNA
-plot.fusion_ps("./extdata/example_visualization_data.txt", parental_rna, pos_coord=c(640, 880))      ##add the proper path of the file "example_visualization_data.txt"
+plot.fusion_ps(input_rpm_file, parental_rna, pos_coord = c(640, 880)) #mention the coordinates here for zoomed-in positions
 dev.off()
 cat("File 'Parent_RNA_plot' is written to:", getwd(), "\n\n")
-
-
-# plot_fusion.R
-
-args <- commandArgs(trailingOnly = TRUE)
-fasta_path <- args[1]
-data_path <- args[2]
-
-parental_rna = unlist(read.fasta(fasta_path, seqtype = "DNA", as.string = TRUE, forceDNAtolower = FALSE))
-# Load and process data_path
-
 
