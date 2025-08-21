@@ -49,4 +49,6 @@ FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condi
 ### Example usage
 source("scripts/plot_fusion.R")
 
-DOI: 10.5281/zenodo.16281886 (https://doi.org/10.5281/zenodo.16281886)
+
+DOI: 10.5281/zenodo.16922726 (https://doi.org/10.5281/zenodo.16922726)
+
