@@ -48,14 +48,21 @@ FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condi
 #### The R script `plot_fusion_run.R` (available in the installed package under `scripts/`) provides a simple way to visualize the position of dysregulated RNA species along a parental RNA.
 #### To use:
 ```r
-script_path <- system.file("scripts", "plot_fusion_run.R", package = "FUSION")
-file.edit(script_path)  # Open and modify input file paths as needed
+# Load the script from the installed package
+script_path <- system.file("scripts", "plot_fusion.R", package = "FUSION")
+
+# Open and edit input paths if you want to use your own data
+file.edit(script_path)  
+
+# Run the script
 source(script_path)
 
-Make sure to update:
-    The path to your FASTA file
-    The path to your expression data file
-    The desired coordinates (optional)
+# Make sure to update in the script:
+# - The path to your FASTA file
+# - The path to your expression data file
+# - The desired coordinates
+# - The number of dysregulated RNA species to display (default: 100)
+
 ```
 #### DOI: 10.5281/zenodo.16922726 (https://doi.org/10.5281/zenodo.16922726)
 
