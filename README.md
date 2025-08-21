@@ -56,6 +56,6 @@ Make sure to update:
     The path to your FASTA file
     The path to your expression data file
     The desired coordinates (optional)
-
-DOI: 10.5281/zenodo.16922726 (https://doi.org/10.5281/zenodo.16922726)
+```r
+### DOI: 10.5281/zenodo.16922726 (https://doi.org/10.5281/zenodo.16922726)
 
