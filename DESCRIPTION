@@ -1,7 +1,7 @@
 Package: FUSION
 Type: Package
 Title: FUSION - Family-level Unique Small ncRNA IntegratION
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("Hukam", "Rawal", role = "aut", comment = c(ORCID = "0000-0002-2727-9721")),
     person("Qi", "Chen", role = "aut"),

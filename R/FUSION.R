@@ -5,7 +5,7 @@
 ##' @title FUSION  - Family-level Unique Small RNA Integration across samples using expression matrix
 ##' @details
 ##' For more information, see the user manual:
-##' \code{browseURL(system.file("docs/FUSION_v1.0.1_User_Manual.pdf", package = "FUSION"))}
+##' \code{browseURL(system.file("docs/FUSION_v1.0.2_User_Manual.pdf", package = "FUSION"))}
 ##' 
 ##' After installing the package FUSION, call the library as: library(FUSION).
 ##' \cr

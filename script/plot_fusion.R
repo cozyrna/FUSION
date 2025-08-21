@@ -44,7 +44,7 @@ plot.fusion_ps <- function(input_rpm_file, parental_rna, top_rna_num = 100, pos_
 }
 
 pdf(paste0("./Parent_RNA_plot.pdf"))  ##add desire output file name with path
-parental_rna = unlist(read.fasta("./extdata/human_rRNA_28S.fa", seqtype="DNA", as.string=T, forceDNAtolower=F))   ##add the proper path of the file "human_rRNA_28S.fa"  
+#parental_rna = unlist(read.fasta("./extdata/human_rRNA_28S.fa", seqtype="DNA", as.string=T, forceDNAtolower=F))   ##add the proper path of the file "human_rRNA_28S.fa"
 #plot the whole parental RNA
 plot.fusion_ps("./extdata/example_visualization_data.txt", parental_rna)    ##add the proper path of the file "example_visualization_data.txt"
 #plot the zoomed-in view of the specified region within the parental RNA
