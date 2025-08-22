@@ -45,7 +45,7 @@ FUSION_ms(a = "./extdata/example_matrix1.txt", S1 = 10, S2 = 16, row_mean = 1, t
 
 FUSION_msmc(a = "./extdata/example_matrix_cl.txt", cl = "./extdata/example_condition1.txt", row_mean = 1, top_species = 5000) 
 
-#### The R script `plot_fusion_run.R` (available in the installed package under `scripts/`) provides a simple way to visualize the position of dysregulated RNA species along a parental RNA.
+#### The R script `plot_fusion.R` (available in the installed package under `scripts/`) provides a simple way to visualize the position of dysregulated RNA species along a parental RNA.
 #### To use:
 ```r
 # Load the script from the installed package
@@ -64,5 +64,5 @@ source(script_path)
 # - The number of dysregulated RNA species to display (default: 100)
 
 ```
-#### DOI: 10.5281/zenodo.16922726 (https://doi.org/10.5281/zenodo.16922726)
+#### DOI: 10.5281/zenodo.16929376 (https://doi.org/10.5281/zenodo.16929376
 

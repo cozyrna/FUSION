@@ -1,6 +1,6 @@
 Package: FUSION
 Type: Package
-Title: FUSION - Family-level Unique Small ncRNA IntegratION
+Title: FUSION - Family-level Unique Small RNA IntegratION
 Version: 1.0.2
 Authors@R: c(
     person("Hukam", "Rawal", role = "aut", comment = c(ORCID = "0000-0002-2727-9721")),
@@ -21,4 +21,4 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 NeedsCompilation: no
 Author: Hukam Rawal [aut] (<https://orcid.org/0000-0002-2727-9721>), Qi Chen [aut], Tong Zhou [aut, cre]
-DOI: 10.5281/zenodo.16922726 (https://doi.org/10.5281/zenodo.16922726)
+DOI: 10.5281/zenodo.16929376 (https://doi.org/10.5281/zenodo.16929376)
