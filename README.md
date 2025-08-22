@@ -64,5 +64,4 @@ source(script_path)
 # - The number of dysregulated RNA species to display (default: 100)
 
 ```
-#### DOI: 10.5281/zenodo.16929376 (https://doi.org/10.5281/zenodo.16929376
-
+#### DOI: 10.5281/zenodo.16281885 (https://doi.org/10.5281/zenodo.16281885)
