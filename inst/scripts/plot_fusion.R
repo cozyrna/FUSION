@@ -1,6 +1,6 @@
 library(Biostrings)
 library(seqinr)
-
+### Visualizing Dysregulated RNA Species in Paired Samples ###
 #input_rpm_file: RPM data of the paired samples
 #parental_rna_file: fasta file of the parental RNA
 #top_rna_num: number of RNA species to be visualized (default 100)
@@ -64,5 +64,5 @@ plot.fusion_ps(input_rpm_file, parental_rna)
 #plot the zoomed-in view of the specified region within the parental RNA
 plot.fusion_ps(input_rpm_file, parental_rna, pos_coord = c(640, 880)) #mention the coordinates here for zoomed-in positions
 dev.off()
-cat("File 'Parent_RNA_plot' is written to:", getwd(), "\n\n")
+cat("File 'Parent RNA plot' is written to:", getwd(), "\n\n")
 

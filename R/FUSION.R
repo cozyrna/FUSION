@@ -2,7 +2,7 @@
 
 ##' @name FUSION
 ##' @rdname FUSION
-##' @title FUSION  - Family-level Unique Small RNA Integration across samples using expression matrix
+##' @title FUSION  - Family-level Unique Small RNA IntegratION across samples using expression matrix
 ##' @details
 ##' For more information, see the user manual:
 ##' \code{browseURL(system.file("docs/FUSION_v1.0.2_User_Manual.pdf", package = "FUSION"))}

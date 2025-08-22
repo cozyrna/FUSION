@@ -2,7 +2,7 @@
 % Please edit documentation in R/FUSION.R
 \name{FUSION}
 \alias{FUSION}
-\title{FUSION  - Family-level Unique Small RNA Integration across samples using expression matrix}
+\title{FUSION  - Family-level Unique Small RNA IntegratION across samples using expression matrix}
 \arguments{
 \item{a}{a matrix with first and second column as "Sequence" (or ID) and "Annotation", respectively. Sequence (or ID) must be unique.  Rest of the columns provides RPM or other normalized expression values from different samples under study}
 
@@ -18,7 +18,7 @@ with FUSION_ms, it will return a final output in a data-frame with t-statistics,
 with FUSION_msmc, it will return a final output in a data-frame with t-statistics, P_value, and adjusted P_value for each sncRNA family chosen for analysis
 }
 \description{
-FUSION  - Family-level Unique Small RNA Integration across samples using expression matrix
+FUSION  - Family-level Unique Small RNA IntegratION across samples using expression matrix
 }
 \details{
 For more information, see the user manual:
