@@ -66,4 +66,4 @@ source(script_path)
 ```
 #### Zenodo DOI: 10.5281/zenodo.16281885 (https://doi.org/10.5281/zenodo.16281885)
 #### Citation:
-Rawal HC, Chen Q, Zhou T. **FUSION: a family-level integration approach for robust differential analysis of small non-coding RNAs.** _Bioinformatics_, 2025; btaf526. https://doi.org/10.1093/bioinformatics/btaf526
+Rawal HC, Chen Q, Zhou T. **_FUSION_: a family-level integration approach for robust differential analysis of small non-coding RNAs.** _Bioinformatics_, 2025; btaf526. https://doi.org/10.1093/bioinformatics/btaf526
