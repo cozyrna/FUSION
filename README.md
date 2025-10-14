@@ -64,6 +64,18 @@ source(script_path)
 # - The number of dysregulated RNA species to display (default: 100)
 
 ```
+#### The R script `prepare_matrix_from_SPORTS_outputs.R` (available in the installed package under `scripts/`) can be used to prepare the count-matrix and RPM-matrix using the ‘X_output.txt’ files from the SPORTS output.
+#### To use:
+```r
+# Load the script from the installed package
+Rscript prepare_matrix_from_SPORTS_outputs.R file_list_document out_prefix
+
+# The "file_list_document" must contains the full path of different relevant ‘_output.txt’ files (from SPORTS output). The order in which the files are listed will determine the sample order in the matrix file. Please ensure the files are arranged accordingly.
+# It will generate two files: out_prefix_count-matrix.txt and out_prefix_RPM-matrix.txt
+# out_prefix_RPM-matrix.txt will serve as the input matrix file for FUSION run and out_prefix_count-matrix.txt can be used as input for differential expression analysis with DESeq2, edgeR, etc. i.e. tools which requires a count-matrix as an input. 
+```
+
+
 #### Zenodo DOI: 10.5281/zenodo.16281885 (https://doi.org/10.5281/zenodo.16281885)
 ## Citation:
 Rawal HC, Chen Q, Zhou T. **_FUSION_: a family-level integration approach for robust differential analysis of small non-coding RNAs.** _Bioinformatics_, 2025; btaf526. https://doi.org/10.1093/bioinformatics/btaf526
